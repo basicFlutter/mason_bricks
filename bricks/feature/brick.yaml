@@ -1,4 +1,4 @@
-name: bloc_classes
+name: feature
 description: A new brick created with the Mason CLI.
 
 # The following defines the brick repository url.
@@ -31,3 +31,13 @@ vars:
     description: feature name
     default: Dash
     prompt: What is your feature Name?
+  useCaseName:
+    type: string
+    description: useCase name
+    default: Dash
+    prompt: What is your useCase Name?
+  event:
+    type: string
+    description: event name
+    default: Dash
+    prompt: What is your event Name?
