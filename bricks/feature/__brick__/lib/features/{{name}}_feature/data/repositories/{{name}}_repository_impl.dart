@@ -8,7 +8,7 @@ import '../../domain/repositories/{{name}}_repository.dart';
 class {{name.pascalCase()}}RepositoryImpl extends {{name.pascalCase()}}Repository{
 
     @override
-    Future<Either<ResponseError, SuccessResponse>> {{useCaseName.camelCase()}}(params) async{
+    Future<Either<ResponseError, SuccessResponse>> {{useCase.camelCase()}}(params) async{
        try {
 
        // return Right(SuccessResponse());

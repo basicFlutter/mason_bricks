@@ -31,13 +31,8 @@ vars:
     description: feature name
     default: Dash
     prompt: What is your feature Name?
-  useCaseName:
+  useCase:
     type: string
     description: useCase name
     default: Dash
     prompt: What is your useCase Name?
-  eventName:
-    type: string
-    description: event name
-    default: Dash
-    prompt: What is your event Name?

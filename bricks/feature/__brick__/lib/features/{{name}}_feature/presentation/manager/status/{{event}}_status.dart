@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
+import '../../../../core/exceptions/response_error.dart';
+abstract class {{useCase.pascalCase()}}Status extends Equatable{}
 
-abstract class {{eventName.pascalCase()}}Status extends Equatable{}
-
-class {{eventName.pascalCase()}}Init extends {{eventName.pascalCase()}}Status{
+class {{useCase.pascalCase()}}Init extends {{useCase.pascalCase()}}Status{
   @override
   List<Object?> get props => [];
 }
 
-class {{eventName.pascalCase()}}Loading extends {{eventName.pascalCase()}}Status{
+class {{useCase.pascalCase()}}Loading extends {{useCase.pascalCase()}}Status{
   @override
   List<Object?> get props => [];
 }
 
 
-class {{eventName.pascalCase()}}Completed extends {{eventName.pascalCase()}}Status{
+class {{useCase.pascalCase()}}Completed extends {{useCase.pascalCase()}}Status{
   @override
   List<Object?> get props => [];
 }
 
-class {{eventName.pascalCase()}}Error extends {{eventName.pascalCase()}}Status{
-  final String message;
-  {{eventName.pascalCase()}}Error({required this.message});
+class {{useCase.pascalCase()}}Error extends {{useCase.pascalCase()}}Status{
+  final RespoonseError responseError;
+  {{useCase.pascalCase()}}Error({required this.responseError});
   @override
   List<Object?> get props => [message];
 }
