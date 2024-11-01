@@ -19,10 +19,10 @@ class {{useCase.pascalCase()}}Completed extends {{useCase.pascalCase()}}Status{
 }
 
 class {{useCase.pascalCase()}}Error extends {{useCase.pascalCase()}}Status{
-  final RespoonseError responseError;
+  final ResponseError responseError;
   {{useCase.pascalCase()}}Error({required this.responseError});
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [responseError];
 }
 
 

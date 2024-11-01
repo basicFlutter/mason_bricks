@@ -14,7 +14,7 @@ class {{name.pascalCase()}}RepositoryImpl extends {{name.pascalCase()}}Repositor
 
        return Right(SuccessResponse());
        } on DioException catch (error) {
-       ResponseError responseError =  ErrorHandling().handleDioError(error, {{useCase.camelCase()}});
+       ResponseError responseError =  ErrorHandling().handleDioError(error, "{{useCase.camelCase()}}");
        return Left(responseError);
        }
     }
