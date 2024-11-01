@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../presentation/manager/status/_status.dart';
+import '../../presentation/manager/status/{{useCase}}_status.dart';
 import '../../domain/use_cases/{{useCase}}_use_case.dart';
 
 part '{{name}}_event.dart';
