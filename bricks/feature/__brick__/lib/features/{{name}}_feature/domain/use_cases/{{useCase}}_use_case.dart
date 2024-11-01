@@ -5,12 +5,12 @@ import '../../../../core/success_response/SuccessResponse.dart';
 import '../../../../core/use_case/base_use_case.dart';
 import '../repositories/{{name}}_repository.dart';
 
-class {{useCase.pascalCase()}}UseCase extends BaseUseCase<SuccessResponse , params>{
+class {{useCase.pascalCase()}}UseCase extends BaseUseCase<SuccessResponse , void>{
 
   {{name.pascalCase()}}Repository {{name}}Repository;
   {{useCase.pascalCase()}}UseCase({required this.{{name}}Repository });
   @override
-  Future<Either<ResponseError, SuccessResponse>> call(params params)async{
-    return await {{name}}Repository.{{useCase.camelCase()}}(params);
+  Future<Either<ResponseError, SuccessResponse>> call(void params)async{
+    return await {{name}}Repository.{{useCase.camelCase()}}();
   }
 }
