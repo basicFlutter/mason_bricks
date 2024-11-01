@@ -1,12 +1,12 @@
 part of '{{useCaseName}}_bloc.dart';
 
 
-class {{UseCaseName.pascalCase()}}State  {
-  final {{eventName.pascalCase()}}Status {{event}}Status;
-  const {{eventName.pascalCase()}}State({required  this.{{event}}Status});
-    {{eventName.pascalCase()}}State copyWith({{{event.pascalCase()}}Status? new{{event.pascalCase()}}Status}){
-    return {{UseCaseName.pascalCase()}}State(
-    {{event}}Status : new{{event.pascalCase()}}Status ?? {{event}}Status,
+class {{useCaseName.pascalCase()}}State  {
+  final {{eventName.pascalCase()}}Status {{eventName}}Status;
+  const {{eventName.pascalCase()}}State({required  this.{{eventName}}Status});
+    {{eventName.pascalCase()}}State copyWith({{{event.pascalCase()}}Status? new{{eventName.pascalCase()}}Status}){
+    return {{useCaseName.pascalCase()}}State(
+    {{eventName}}Status : new{{eventName.pascalCase()}}Status ?? {{eventName}}Status,
     );
   }
 }

@@ -36,7 +36,7 @@ vars:
     description: useCase name
     default: Dash
     prompt: What is your useCase Name?
-  event:
+  eventName:
     type: string
     description: event name
     default: Dash
