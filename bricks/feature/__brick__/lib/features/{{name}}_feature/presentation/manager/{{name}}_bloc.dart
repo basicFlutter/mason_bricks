@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part '{{useCaseName}}_event.dart';
-part '{{useCaseName}}_state.dart';
+part '{{name}}_event.dart';
+part '{{name}}_state.dart';
 
 class {{name.PascalCase()}}Bloc extends Bloc<{{name.PascalCase()}}Event, {{name.PascalCase()}}State> {
   {{name.pascalCase()}}UseCase {{name}}UseCase;
