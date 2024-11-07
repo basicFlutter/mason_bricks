@@ -5,7 +5,7 @@ class {{name.pascalCase()}} extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomBody(
-    body:SizedBox()
+        body:SizedBox()
     );
   }
 }
