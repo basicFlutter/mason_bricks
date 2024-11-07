@@ -1,4 +1,5 @@
 import 'package:tmanagix/library.dart';
+import '../manager/{{name}}_bloc.dart';
 class {{name.pascalCase()}}Page extends StatelessWidget {
   const {{name.pascalCase()}}Page({super.key});
 
