@@ -4,8 +4,16 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBody(
-        body:SizedBox()
+    return BlocProvider(
+      create: (context) => {{name.pascalCase()}}Bloc({{useCase.camelCase()}}UseCase: locator()),
+      child: Builder(
+          builder: (context) {
+            return CustomBody(
+                showCustomTopAppBar: true,
+                body: SizedBox()
+            );
+          }
+      ),
     );
   }
 }
