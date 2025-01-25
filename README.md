@@ -22,6 +22,7 @@ bricks:
     git:
       url: https://github.com/basicFlutter/mason_bricks.git
       path: bricks/feature
+```
 ### 2 . نصب Mason CLI
 ابزار Mason CLI را با دستور زیر نصب و فعال کنید:
 
