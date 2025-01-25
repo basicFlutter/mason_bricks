@@ -20,7 +20,7 @@
 bricks:
   feature:
     git:
-      url: https://github.com/basicFlutter/mason_bricks.git
+      url: https://github.com/basicFlutter/mason_bloc_and_clean_bricks.git
       path: bricks/feature
 ```
 ### 2 . نصب Mason CLI
