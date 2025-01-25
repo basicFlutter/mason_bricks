@@ -25,20 +25,26 @@ bricks:
 ```
 ### 2 . نصب Mason CLI
 ابزار Mason CLI را با دستور زیر نصب و فعال کنید:
+```bash
 
 dart pub global activate mason_cli
+
+```
 ### 3. دانلود قالب‌ها
 برای دانلود قالب‌ها دستور
-
+```bash
 mason get
-
+```
 ### 4. تولید فیچر جدید
 برای ایجاد فایل‌های موردنیاز یک فیچر جدید، از دستور زیر استفاده کنید:
+```bash
 mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاده
-
+```
 ### مثال
 برای ایجاد فیچری به نام user_selector با مورد استفاده‌ای به نام get_users، دستور زیر را اجرا کنید:
+```bash
 mason make feature --name=user_selector --useCase=get_users
+```
 
 
 
