@@ -13,7 +13,7 @@ class {{name.pascalCase()}}RepositoryImpl extends {{name.pascalCase()}}Repositor
     @override
     Future<Either<ResponseError, SuccessResponse>> {{useCase.camelCase()}}() async{
        try {
-       final response = {{name.camelCase()}}ApiProvider.call{{useCase.pascalCase()}}Route();
+       final response = await {{name.camelCase()}}ApiProvider.call{{useCase.pascalCase()}}Route();
        return Right(SuccessResponse());
        } on DioException catch (error) {
        ResponseError responseError =  ErrorHandling().handleDioError(error, "{{useCase.camelCase()}}");
