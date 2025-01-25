@@ -1,4 +1,4 @@
-import 'package:tmanagix/library.dart';
+import '/../library.dart';
 
 extension ThemeExtensions on ThemeData {
   Color getColorStyle({required Color lightColor, required Color darkColor}) {
