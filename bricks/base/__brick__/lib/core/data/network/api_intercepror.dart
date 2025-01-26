@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import '/core/data/network_data_service_provider.dart';
-import '/core/secure_storage/flutter_secure_storage_const.dart';
-import '/core/secure_storage/secure_storage.dart';
-import '/core/secure_storage/secure_storage_interface.dart';
+import '/../core/secure_storage/flutter_secure_storage_const.dart';
+import '/../core/secure_storage/secure_storage.dart';
+import '/../core/secure_storage/secure_storage_interface.dart';
 class NetworkServiceInterceptor extends Interceptor{
   final SecureStorageInterface _secureStorageInterface;
   final Dio _dio ;
