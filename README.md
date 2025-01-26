@@ -56,6 +56,7 @@ flutter:
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
 ```
+همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
 ```yaml
 name: test_mason
