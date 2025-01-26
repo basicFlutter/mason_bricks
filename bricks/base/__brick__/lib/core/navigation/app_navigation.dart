@@ -8,51 +8,36 @@ class AppNavigator with AppLogger {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   NavigatorState get state => navigatorKey.currentState!;
+  /// TODO : create splash page
   final initialRoute = SplashPage.route;
 
   Route? onGenerateRoute(RouteSettings settings) {
-    final routeName = settings.name;
-    logger.d("Navigate to $routeName");
-    // final arguments = (settings.arguments as Map<String , dynamic>? )?? <String , dynamic>{};
-    final arguments = (settings.arguments as dynamic);
-
-    Widget screen;
-    switch (routeName) {
-      case SplashPage.route:
-        screen = const SplashPage();
-        break;
-      default:
-        screen = const SplashPage();
-    }
-
     return PageTransition(
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 200),
-        child: screen);
+        child: screen
+    );
   }
 
 
   Future<T?> to<T>(Widget destination)  {
     logger.d("Navigate to $destination");
-
     return  state.push(MaterialPageRoute(builder: (_)=>destination));
   }
 
-
-
-   back<T>(dynamic result) {
-      state.pop(result);
+  back<T>(dynamic result) {
+    state.pop(result);
   }
 
   Future<T?> off<T>(Widget destination) {
     logger.d("Navigate to $destination");
     return state.pushReplacement(MaterialPageRoute(builder: (_)=>destination));
   }
+
 }
 
 class CustomRouteInformation extends RouteInformation {
   final String? myProperty;
-
   CustomRouteInformation({
     required this.myProperty,
     super.location,
