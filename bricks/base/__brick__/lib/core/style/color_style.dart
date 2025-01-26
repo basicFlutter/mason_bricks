@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-class ColorAppTheme {
-  const ColorAppTheme();
+class ColorStyle {
+  const ColorStyle();
 
 
   static const Color primaryLight50 = Color(0xffeaf0ff);
@@ -210,27 +210,27 @@ class ColorAppTheme {
   static const Color successfulDark900 = Color(0xff124011);
 
   static BoxShadow primaryShadowLight = BoxShadow(
-    color: ColorAppTheme.primaryLight.withOpacity(0.1),
+    color: ColorStyle.primaryLight.withOpacity(0.1),
     spreadRadius: 0,
     blurRadius: 2,
     offset: const Offset(0, 1),
   );
 
   static BoxShadow primaryShadowDark = BoxShadow(
-    color: ColorAppTheme.primaryLight.withOpacity(0.1),
+    color: ColorStyle.primaryLight.withOpacity(0.1),
     spreadRadius: 0,
     blurRadius: 2,
     offset: const Offset(0, 1),
   );
 
   static BoxShadow darkShadow = BoxShadow(
-    color: ColorAppTheme.primaryLight.withOpacity(0.1),
+    color: ColorStyle.primaryLight.withOpacity(0.1),
     spreadRadius: 0,
     blurRadius: 2,
     offset: const Offset(0, 1),
   );
   static BoxShadow lightShadow = BoxShadow(
-    color: ColorAppTheme.primaryLight.withOpacity(0.1),
+    color: ColorStyle.primaryLight.withOpacity(0.1),
     spreadRadius: 0,
     blurRadius: 2,
     offset: const Offset(0, 1),
