@@ -5,10 +5,13 @@
 ---
 
 ## ویژگی‌ها
-- ایجاد خودکار فایل‌ها و پوشه‌های مربوط به فیچر
-- استفاده از معماری Clean
-- شامل کلاس‌های BLoC، UseCase و Repository
-- پوشه‌بندی منظم و قابل گسترش
+- ایجاد خودکار فایل‌ها و پوشه‌های مربوط به فیچر: سازمان‌دهی خودکار ساختار پروژه برای هر فیچر.
+- استفاده از معماری Clean: پیاده‌سازی اصول معماری Clean Architecture برای کدنویسی تمیز و مقیاس‌پذیر.
+- شامل کلاس‌های BLoC، UseCase و Repository: جداسازی کامل لایه‌ها برای مدیریت بهتر منطق، داده‌ها و رابط کاربری.
+- پوشه‌بندی منظم و قابل گسترش: ساختار پوشه‌ها به‌صورت منظم و با قابلیت توسعه آسان.
+- پشتیبانی از چند زبان (Localization): امکان اضافه کردن ترجمه‌های چندزبانه برای پشتیبانی از کاربران مختلف.
+- پشتیبانی از Firebase Cloud Messaging (FCM): ارسال و دریافت پیام‌های نوتیفیکیشن با استفاده از Firebase.
+- ارتباط با سرور با استفاده از Dio: مدیریت درخواست‌های HTTP با استفاده از کتابخانه قدرتمند Dio.
 
 ---
 
@@ -35,7 +38,14 @@ dart pub global activate mason_cli
 ```bash
 mason get
 ```
-### 4. تولید فیچر جدید
+
+### 4. ایجاد فایل های مورد نیاز (از این دستور فقط یک بار استفاده شود)
+برای ایجاد فایل‌های موردنیاز کل پروژه، از دستور زیر استفاده کنید:
+
+```bash
+mason make base
+```
+### 5. تولید فیچر جدید
 برای ایجاد فایل‌های موردنیاز یک فیچر جدید، از دستور زیر استفاده کنید:
 ```bash
 mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاده
@@ -45,6 +55,129 @@ mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاد
 ```bash
 mason make feature --name=user_selector --useCase=get_users
 ```
+### 6. فایل pubspec.yaml
+برای اضافه کردن تنظیمات فایل‌های ترجمه به فایل pubspec.yaml، می‌توانید از ساختار زیر استفاده کنید. این تنظیمات مشخص می‌کند که Flutter باید فایل‌های ترجمه را پردازش کند و کلاس‌های محلی‌سازی را تولید کند:
+```yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+
+flutter:
+  generate: true
+
+  assets:
+    - lib/l10n/intl_en.arb
+    - lib/l10n/intl_fa.arb
+```
+همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
+
+```yaml
+name: test_mason
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.1
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+  cupertino_icons: ^1.0.8
+  flutter_bloc: ^9.0.0
+  dio: ^5.3.3
+  pretty_dio_logger: ^1.3.1
+  firebase_messaging: ^15.1.1
+  firebase_core: ^3.4.1
+  firebase_crashlytics: ^4.1.1
+  awesome_notifications: ^0.10.0
+  logger: ^2.0.2+1
+  encrypt_shared_preferences: ^0.8.0
+  flutter_screenutil: ^5.9.0
+  dartz: ^0.10.1
+  page_transition: ^2.1.0
+  equatable: ^2.0.5
+  get_it: ^8.0.1
+  gap: ^3.0.1
+  persian_datetime_picker: ^3.1.0
+  shamsi_date: ^1.0.4
+  package_info_plus: ^8.0.2
+  flutter_secure_storage: ^9.2.4
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.14
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  generate: true
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
+  assets:
+    - lib/l10n/intl_en.arb
+    - lib/l10n/intl_fa.arb
+```
+
+
 
 
 
