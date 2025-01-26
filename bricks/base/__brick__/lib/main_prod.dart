@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
 import 'app_config.dart';
-import 'error_handler/global_app_setup.dart';
+import '../global_app_setup/global_app_setup.dart';
 
 import 'my_app.dart';
 

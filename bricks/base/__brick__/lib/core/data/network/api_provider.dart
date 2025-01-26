@@ -1,11 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import '/../core/data/network/api_intercepror.dart';
+import '/../core/secure_storage/secure_storage.dart';
+import '/../core/data/network/api_interface.dart';
 import '../../../app_config.dart';
 import '../../constants/constants.dart';
-
 class ApiProvider extends ApiProviderInterface {
-  ApiProvider._internal();
+  ApiProvider._internal() {
+    // Initialize the interceptor here after 'dio' is fully initialized.
+    networkServiceInterceptor = NetworkServiceInterceptor(
+      SecureStorage(),
+      dio,
+    );
+  }
 
   static final ApiProvider _singleton = ApiProvider._internal();
 
@@ -24,13 +32,12 @@ class ApiProvider extends ApiProviderInterface {
   );
 
   final Dio dio = Dio(optionsDio);
-  SecureStorageInterface secureStorageInterface = SecureStorageInterface()
-  final NetworkServiceInterceptor networkServiceInterceptor = NetworkServiceInterceptor();
+
+  late final NetworkServiceInterceptor networkServiceInterceptor;
 
   @override
-  Future<Response> get(path, {dynamic data, Options? options , String? baseUrl}) async {
-
-    if(baseUrl != null){
+  Future<Response> get(path, {dynamic data, Options? options, String? baseUrl}) async {
+    if (baseUrl != null) {
       dio.options.baseUrl = baseUrl;
     }
     return await dio.get(path, queryParameters: data, options: options);
@@ -38,12 +45,11 @@ class ApiProvider extends ApiProviderInterface {
 
   @override
   Future<Response> post(path, {dynamic data, Options? options, String? baseUrl}) async {
-    if(baseUrl != null){
+    if (baseUrl != null) {
       dio.options.baseUrl = baseUrl;
     }
-    return  await dio.post(path, data: data, options: options);
+    return await dio.post(path, data: data, options: options);
   }
-
 
   @override
   Future<Response> put(path, {Map? data, Options? options}) async =>
@@ -60,41 +66,24 @@ class ApiProvider extends ApiProviderInterface {
   @override
   void initLogger() async {
     dio.interceptors.add(PrettyDioLogger(
-        requestHeader: false,
-        requestBody: false,
-        request: false,
-        responseBody: false,
-        responseHeader: false,
-        compact: false,
-        enabled: kDebugMode
+      requestHeader: false,
+      requestBody: false,
+      request: false,
+      responseBody: false,
+      responseHeader: false,
+      compact: false,
+      enabled: kDebugMode,
     ));
     setErrorHandler();
   }
-
-
-
 
   @override
   Future<void> setToken() async {
     dio.options.headers.addAll({"Authorization": "Bearer ${Constants.accessToken}"});
   }
 
-
   @override
   void setErrorHandler() {
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, ErrorInterceptorHandler handler) async {
-          if (error.response?.statusCode == 401) {
-
-          } else {
-            handler.next(error);
-          }
-        },
-        onResponse: (dynamic response, ResponseInterceptorHandler handler) {
-          handler.next(response);
-        },
-      ),
-    );
+    dio.interceptors.add(networkServiceInterceptor);
   }
 }
