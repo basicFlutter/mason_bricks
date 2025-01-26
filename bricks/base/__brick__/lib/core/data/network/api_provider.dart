@@ -3,22 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../../app_config.dart';
 import '../../constants/constants.dart';
-abstract class ApiProviderInterface {
-  Future<Response> get(path, {Options? options});
-
-  Future<Response> put(path, {Map? data, Options? options});
-
-  Future<Response> post(path, {Map? data, Options? options});
-
-  Future<Response> delete(path, {Options? options});
-
-  Future<Response> patch(path, {Map? data, Options? options});
-
-  Future<void> setToken();
-
-  void initLogger();
-  void setErrorHandler();
-}
 
 class ApiProvider extends ApiProviderInterface {
   ApiProvider._internal();
@@ -40,6 +24,8 @@ class ApiProvider extends ApiProviderInterface {
   );
 
   final Dio dio = Dio(optionsDio);
+  SecureStorageInterface secureStorageInterface = SecureStorageInterface()
+  final NetworkServiceInterceptor networkServiceInterceptor = NetworkServiceInterceptor();
 
   @override
   Future<Response> get(path, {dynamic data, Options? options , String? baseUrl}) async {

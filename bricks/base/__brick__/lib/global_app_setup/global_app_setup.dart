@@ -11,8 +11,8 @@ import '../core/firebase/notification_controller.dart';
 import '../core/logger/app_logger.dart';
 import '../core/service_locator.dart';
 
-class GlobalErrorHandler with AppLogger {
-  GlobalErrorHandler({
+class GlobalAppSetup  with AppLogger {
+  GlobalAppSetup ({
     required Widget child
 }){
     if(kReleaseMode){
@@ -93,20 +93,5 @@ class GlobalErrorHandler with AppLogger {
             receivedAction);
       },
     );
-  }
-}
-
-StreamSocket streamSocket =StreamSocket();
-
-
-class StreamSocket{
-  final _socketResponse= StreamController<String>();
-
-  void Function(String) get addResponse => _socketResponse.sink.add;
-
-  Stream<String> get getResponse => _socketResponse.stream;
-
-  void dispose(){
-    _socketResponse.close();
   }
 }
