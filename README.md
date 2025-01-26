@@ -55,8 +55,15 @@ mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاد
 ```bash
 mason make feature --name=user_selector --useCase=get_users
 ```
-### 6. فایل pubspec.yaml
+### 6. چند زبانه 
+برای پیکربندی قابلیت چندزبانه (Localization) در Flutter، باید فایل l10n.yaml را در ریشه پروژه ایجاد کنید و تنظیمات زیر را داخل آن قرار دهید:
+```yaml
+arb-dir: lib/l10n
+template-arb-file: intl_en.arb
+output-localization-file: app_localizations.dart
+```
 برای اضافه کردن تنظیمات فایل‌های ترجمه به فایل pubspec.yaml، می‌توانید از ساختار زیر استفاده کنید. این تنظیمات مشخص می‌کند که Flutter باید فایل‌های ترجمه را پردازش کند و کلاس‌های محلی‌سازی را تولید کند:
+
 ```yaml
 
 dependencies:
