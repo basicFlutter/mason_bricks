@@ -80,6 +80,7 @@ flutter:
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
 ```
+### 7. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
 ```yaml
