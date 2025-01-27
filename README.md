@@ -112,6 +112,55 @@ flutter:
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
 ```
+
+## تنظیم Flavor برای اندروید 
+
+برای تنظیم Flavor، این کدها رو به فایل `build.gradle` در پوشه `app` اضافه کنید:
+
+```gradle
+android {
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            dimension  "default"
+            applicationIdSuffix ".dev"
+        }
+
+        prod {
+            dimension  "default"
+            applicationIdSuffix ""
+        }
+
+        local {
+            dimension  "default"
+            applicationIdSuffix ".local"
+        }
+    }
+}
+```
+
+### اجرای پروژه برای هر Flavor
+
+برای اجرای پروژه در محیط‌های مختلف، از این دستورات استفاده کنید:
+
+- **محیط توسعه (dev):**
+
+  ```bash
+  flutter run --flavor dev --target lib/main_dev.dart
+  ```
+
+- **محیط تولید (prod):**
+
+  ```bash
+  flutter run --flavor prod --target lib/main_prod.dart
+  ```
+
+- **محیط محلی (local):**
+
+  ```bash
+  flutter run --flavor local --target lib/main_local.dart
+  ```
 ### 7. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
@@ -215,6 +264,11 @@ flutter:
   assets:
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
+```
+### آپدیت پکیج ها 
+برا نصب آخرین ورژن پکیج ها بعد از اضافه کردن به فایل yaml با دستور زیر به اخرین ورژن ها ارتقا داده میشوند.
+```yaml
+flutter pub upgrade --major-versions
 ```
 
 
