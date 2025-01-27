@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../core/error/response_error.dart';
+import '../../../../core/success_response/success_response.dart';
 import '../../presentation/manager/status/{{useCase}}_status.dart';
 import '../../domain/use_cases/{{useCase}}_use_case.dart';
 import '/../core/params/no_params.dart';
