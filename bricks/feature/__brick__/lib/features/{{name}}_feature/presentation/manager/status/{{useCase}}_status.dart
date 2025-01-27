@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../../../core/exceptions/response_error.dart';
+import '../../../../../core/error/response_error.dart';
 abstract class {{useCase.pascalCase()}}Status extends Equatable{}
 
 class {{useCase.pascalCase()}}Init extends {{useCase.pascalCase()}}Status{

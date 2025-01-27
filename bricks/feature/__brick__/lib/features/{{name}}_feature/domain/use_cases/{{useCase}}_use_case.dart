@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/exceptions/response_error.dart';
-import '../../../../core/success_response/SuccessResponse.dart';
-import '../../../../core/use_case/base_use_case.dart';
-import '../repositories/{{name}}_repository.dart';
+import '../../../../core/error/response_error.dart';
+import '../../../../core/success_response/success_response.dart';
+import '../../../../core/use_case/base_usecase.dart';
+import '../repositories/user_selector_test_repository.dart';
 
 class {{useCase.pascalCase()}}UseCase extends BaseUseCase<SuccessResponse , void>{
 

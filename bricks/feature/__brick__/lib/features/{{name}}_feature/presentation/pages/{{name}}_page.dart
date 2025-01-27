@@ -1,5 +1,5 @@
-import 'package:tmanagix/library.dart';
-import '../manager/{{name}}_bloc.dart';
+import '../../../../library.dart';
+import '../manager/user_selector_test_bloc.dart';
 class {{name.pascalCase()}}Page extends StatelessWidget {
   const {{name.pascalCase()}}Page({super.key});
 
@@ -9,10 +9,7 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
       create: (context) => {{name.pascalCase()}}Bloc({{useCase.camelCase()}}UseCase: locator()),
       child: Builder(
           builder: (context) {
-            return CustomBody(
-                showCustomTopAppBar: true,
-                body: SizedBox()
-            );
+            return SizedBox();
           }
       ),
     );

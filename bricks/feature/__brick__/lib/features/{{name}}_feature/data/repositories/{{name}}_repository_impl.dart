@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/exceptions/response_error.dart';
-import '../../../../core/success_response/SuccessResponse.dart';
-import '../../../../core/use_case/base_use_case.dart';
+import '../../../../core/error/error_handling.dart';
+import '../../../../core/error/response_error.dart';
+import '../../../../core/success_response/success_response.dart';
 import '../../domain/repositories/{{name}}_repository.dart';
-import '../../../../core/data/error_handling/error_handling.dart';
 import '../data_sources/{{name}}_api_provider.dart';
 
 class {{name.pascalCase()}}RepositoryImpl extends {{name.pascalCase()}}Repository{
