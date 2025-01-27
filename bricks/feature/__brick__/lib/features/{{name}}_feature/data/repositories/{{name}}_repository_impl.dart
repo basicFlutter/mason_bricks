@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import '../../../../core/error/error_handling.dart';
 import '../../../../core/error/response_error.dart';
 import '../../../../core/success_response/success_response.dart';
