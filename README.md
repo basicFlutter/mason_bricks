@@ -179,7 +179,36 @@ navigation.off(UserPage());
 ```
 
 این روش باعث می‌شود که نیازی به context برای ناوبری نداشته باشید و کد شما تمیزتر و مدیریت‌پذیرتر باشد.
-### 7. فایل کامل pubspec.yaml
+
+### 7. تزریق وابستگی (Dependency injection)
+برای فیچر های جدیدی که ایجاد میکنید باید تزریق وابستگی های فیچر جدید رو داخل فایل service_locator.dart قرار بدید.
+#### مثال تزریق وابستگی
+```dart
+
+serviceLocator() async {
+
+  locator.registerLazySingleton<AppNavigator>(() => AppNavigator());
+  locator.registerSingleton<Dio>(Dio());
+
+ ///############################################## API Provider #############################
+
+ locator.registerLazySingleton<UserApiProvider>(() => UserApiProvider());
+
+  ///############################################## Repository #############################
+
+  locator.registerLazySingleton<UserRepository>(()=>UserRepositoryImp(userApiProvider: locator()));
+
+  ///############################################## UseCase #############################
+
+
+   locator.registerLazySingleton<GetUserUseCase>(()=>GetUserUseCase( userRepository: locator()));
+
+
+}
+```
+
+
+### 8. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
 ```yaml
