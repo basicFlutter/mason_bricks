@@ -402,9 +402,15 @@ flutter:
 ```yaml
 flutter pub upgrade --major-versions
 ```
-
-
-
+---
+# توجه مهم 
+چند پکیج در این قالب نیاز به تنظیمات جداگانه برای ios  و android دارند که باید طبق مستندات این پکیج ها این تنظیمات رو انجام بدید
+```dart
+  firebase_messaging: ^15.1.1
+  firebase_core: ^3.4.1
+  firebase_crashlytics: ^4.1.1
+  awesome_notifications: ^0.10.0
+```
 
 
 
