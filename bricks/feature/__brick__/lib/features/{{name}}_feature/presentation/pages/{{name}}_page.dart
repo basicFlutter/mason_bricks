@@ -6,12 +6,29 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => {{name.pascalCase()}}Bloc({{useCase.camelCase()}}UseCase: locator()),
+      create: (context) => {{name.pascalCase()}}Bloc({{useCase.camelCase()}}UseCase: locator())..add({{useCase.pascalCase()}}()),
       child: Builder(
           builder: (context) {
-            return SizedBox();
-          }
-      ),
+            return  Scaffold(
+            body: BlocBuilder<{{name.pascalCase()}}Bloc , {{name.pascalCase()}}State>(
+              builder: (context , state){
+                 if(state.{{useCase.camelCase()}}Status is {{useCase.pascalCase()}}Loading){
+                    return CircularProgressIndicator();
+                  }
+
+                 if(state.getUsersStatus is {{useCase.pascalCase()}}Completed){
+                  {{useCase.pascalCase()}}Completed {{useCase.camelCase()}}Completed = state.{{useCase.camelCase()}}Status as {{useCase.pascalCase()}}Completed;
+                   return SizedBox();
+                 }
+                 if(state.getUsersStatus is {{useCase.pascalCase()}}Error){
+                    {{useCase.pascalCase()}}Error {{useCase.camelCase()}}Error = state.{{useCase.camelCase()}}Status as {{useCase.pascalCase()}}Error;
+                   return SizedBox();
+                 }
+                 return SizedBox();
+
+              }),
+            );
+          }),
     );
   }
 }
