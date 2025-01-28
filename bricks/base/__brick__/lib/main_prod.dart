@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'app_config.dart';
+import 'global_app_setup/app_config.dart';
 import '../global_app_setup/global_app_setup.dart';
 
 import 'my_app.dart';

@@ -28,8 +28,10 @@ class GlobalAppSetup  with AppLogger {
   void init(Widget child) async{
     serviceLocator();
     WidgetsFlutterBinding.ensureInitialized();
-    await _notificationConfig();
-    await Firebase.initializeApp();
+
+    ///for firebase
+    // await _notificationConfig();
+    // await Firebase.initializeApp();
 
 
     ApiProvider().initLogger();

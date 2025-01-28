@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
-
 import '../logger/app_logger.dart';
+import '../../features/splash_feature/presentation/pages/splash_page.dart';
 
 class AppNavigator with AppLogger {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -10,6 +9,7 @@ class AppNavigator with AppLogger {
   NavigatorState get state => navigatorKey.currentState!;
   /// TODO : create splash page
   final initialRoute = SplashPage.route;
+  Widget screen = SplashPage();
 
   Route? onGenerateRoute(RouteSettings settings) {
     return PageTransition(
