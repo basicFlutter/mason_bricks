@@ -188,7 +188,7 @@ navigation.off(UserPage());
 
 ```dart
 ScreenUtilInit(
-          designSize: const Size(390, (844)), // این مقدار را بر اساس طراحی پروژه خود تنظیم کنید.
+          designSize: const Size(390,844), // این مقدار را بر اساس طراحی پروژه خود تنظیم کنید.
           minTextAdapt: true,
           splitScreenMode: false,
           useInheritedMediaQuery: true,
