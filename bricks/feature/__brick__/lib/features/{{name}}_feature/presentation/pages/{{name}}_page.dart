@@ -1,5 +1,5 @@
 import '../../../../library.dart';
-import '../manager/user_selector_test_bloc.dart';
+import '../manager/{{name}}_bloc.dart.dart';
 class {{name.pascalCase()}}Page extends StatelessWidget {
   const {{name.pascalCase()}}Page({super.key});
 
