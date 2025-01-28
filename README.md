@@ -327,7 +327,6 @@ dependencies:
   firebase_crashlytics: ^4.1.1
   awesome_notifications: ^0.10.0
   logger: ^2.0.2+1
-  encrypt_shared_preferences: ^0.8.0
   flutter_screenutil: ^5.9.0
   dartz: ^0.10.1
   page_transition: ^2.1.0
