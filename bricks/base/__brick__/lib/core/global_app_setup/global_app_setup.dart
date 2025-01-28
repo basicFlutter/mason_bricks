@@ -56,47 +56,4 @@ class GlobalAppSetup  with AppLogger {
     }
   }
 
-  Future<void> _notificationConfig() async{
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-
-    AwesomeNotifications().initialize(
-        '',
-        [
-          NotificationChannel(
-              enableLights: true,
-              enableVibration: true,
-              vibrationPattern: highVibrationPattern,
-              // defaultRingtoneType: DefaultRingtoneType,
-              playSound: true,
-              importance: NotificationImportance.Max,
-              channelShowBadge: true,
-              defaultRingtoneType: DefaultRingtoneType.Notification,
-              criticalAlerts: true,
-              // channelGroupKey: 'basic_channel_group',
-              channelKey: 'basic_channel',
-              channelName: 'Basic notifications',
-              channelDescription: 'Notification channel for basic tests',
-              defaultColor: Colors.indigo,
-              ledColor: Colors.white)
-        ],
-        debug: false);
-
-    AwesomeNotifications().setListeners(
-      onActionReceivedMethod: (ReceivedAction receivedAction) {
-        return NotificationController.onActionReceivedMethod(receivedAction);
-      },
-      onNotificationCreatedMethod: (ReceivedNotification receivedNotification) {
-        return NotificationController.onNotificationCreatedMethod(
-            receivedNotification);
-      },
-      onNotificationDisplayedMethod: (ReceivedNotification receivedAction) {
-        return NotificationController.onNotificationDisplayedMethod(
-            receivedAction);
-      },
-    );
-  }
 }
