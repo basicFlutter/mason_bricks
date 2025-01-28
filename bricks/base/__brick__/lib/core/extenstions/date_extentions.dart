@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart' as datePicker;
 
-extension DaysInMonthExtension on DateTime {
+extension CustomDateExtensions on DateTime {
 
   datePicker.Jalali get toJalaliDateTime{
     return datePicker.Jalali.fromDateTime(this);
