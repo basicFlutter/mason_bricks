@@ -1,25 +1,24 @@
 import 'dart:async';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../core/data/network/api_provider.dart';
-import '../core/firebase/notification_controller.dart';
-import '../core/logger/app_logger.dart';
-import '../core/service_locator.dart';
+import '../data/network/api_provider.dart';
+import '../firebase/notification_controller.dart';
+import '../logger/app_logger.dart';
+import '../service_locator.dart';
 
 class GlobalAppSetup  with AppLogger {
   GlobalAppSetup ({
     required Widget child
 }){
     if(kReleaseMode){
-      ErrorWidget.builder = (_)=> Container(width: 100, height: 200, color: Colors.red, child: const Center(child: Text("error builder ro dorost kon"),),);
+      ErrorWidget.builder = (_)=> Container(width: 100, height: 200, color: Colors.red, child: const Center(child: Text("custom error builder"),),);
     }
       WidgetsFlutterBinding.ensureInitialized();
-      String url = 'http://localhost:8080';
+
       init(child);
 
   }

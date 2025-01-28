@@ -4,7 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '/../core/data/network/api_intercepror.dart';
 import '/../core/secure_storage/secure_storage.dart';
 import '/../core/data/network/api_interface.dart';
-import '../../../app_config.dart';
+import '../../global_app_setup/app_config.dart';
 import '../../constants/constants.dart';
 class ApiProvider extends ApiProviderInterface {
   ApiProvider._internal() {
@@ -67,9 +67,9 @@ class ApiProvider extends ApiProviderInterface {
   void initLogger() async {
     dio.interceptors.add(PrettyDioLogger(
       requestHeader: false,
-      requestBody: false,
-      request: false,
-      responseBody: false,
+      requestBody: true,
+      request: true,
+      responseBody: true,
       responseHeader: false,
       compact: false,
       enabled: kDebugMode,
