@@ -53,6 +53,7 @@ bricks:
       url: https://github.com/basicFlutter/mason_bloc_and_clean_bricks.git
       path: bricks/feature
 ```
+---
 ### 2 . نصب Mason CLI
 ابزار Mason CLI را با دستور زیر نصب و فعال کنید:
 ```bash
@@ -60,11 +61,13 @@ bricks:
 dart pub global activate mason_cli
 
 ```
+---
 ### 3. دانلود قالب‌ها
 برای دانلود قالب‌ها دستور
 ```bash
 mason get
 ```
+---
 
 ### 4. ایجاد فایل های مورد نیاز (از این دستور فقط یک بار استفاده شود)
 برای ایجاد فایل‌های موردنیاز کل پروژه، از دستور زیر استفاده کنید:
@@ -72,30 +75,59 @@ mason get
 ```bash
 mason make base
 ```
+---
 ### 5. تولید فیچر جدید
 برای ایجاد فایل‌های موردنیاز یک فیچر جدید، از دستور زیر استفاده کنید:
 ```bash
 mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاده
 ```
-### مثال
-برای ایجاد فیچری به نام user با useCase به نام get_users، دستور زیر را اجرا کنید:
+
+ ### مثال
+ برای ایجاد فیچری به نام user با useCase به نام get_users، دستور زیر را اجرا کنید:
 ```bash
 mason make feature --name=user --useCase=get_users
 ```
-### 6. چند زبانه 
+---
+
+### 6. تزریق وابستگی (Dependency injection)
+برای فیچر های جدیدی که ایجاد میکنید باید تزریق وابستگی های فیچر جدید رو داخل فایل service_locator.dart قرار بدید.
+ #### مثال تزریق وابستگی
+```dart
+
+serviceLocator() async {
+
+  locator.registerLazySingleton<AppNavigator>(() => AppNavigator());
+  locator.registerSingleton<Dio>(Dio());
+
+ ///############################################## API Provider #############################
+
+ locator.registerLazySingleton<UserApiProvider>(() => UserApiProvider());
+
+  ///############################################## Repository #############################
+
+  locator.registerLazySingleton<UserRepository>(()=>UserRepositoryImp(userApiProvider: locator()));
+
+  ///############################################## UseCase #############################
+
+
+   locator.registerLazySingleton<GetUserUseCase>(()=>GetUserUseCase( userRepository: locator()));
+
+
+}
+```
+#### فراهم کردن یک bloc 
+کلاس bloc به عنوان ورودی useCase های مورد نیاز خودش رو دریافت میکنه که میتونیم از locator برای تزریق وابستگی به شکل زیر استفاده کنیم.
+```dart
+BlocProvider(
+      create: (context) => UserBloc(getUsersUseCase: locator()),
+    )
+```
+---
+
+### 7. چند زبانه 
 برای تعریف متغیرهای چندزبانه در پروژه Flutter، باید فایل‌های موجود در پوشه lib/l10n را ویرایش کنید. در این پوشه، فایل‌های .arb برای هر زبان قرار دارند که ترجمه‌ها را ذخیره می‌کنند. به عنوان مثال، فایل intl_en.arb برای زبان انگلیسی و intl_fa.arb برای زبان فارسی استفاده می‌شود.
-
-#### استفاده از ترجمه‌ها در کد:
-بعد از تولید فایل‌های محلی‌سازی با اجرای دستور flutter pub get، می‌توانید به راحتی از متغیرهای تعریف‌شده برای نمایش ترجمه‌ها استفاده کنید. کافیست دستور زیر را در کد خود به‌کار ببرید:
-```dart
-AppLocalizations localizations = AppLocalizations.of(context)!;
-```
-### مثال 
-```dart
-Text(localizations.hello);
-```
-
-برای اضافه کردن تنظیمات فایل‌های ترجمه به فایل pubspec.yaml، می‌توانید از ساختار زیر استفاده کنید. این تنظیمات مشخص می‌کند که Flutter باید فایل‌های ترجمه را پردازش کند و کلاس‌های محلی‌سازی را تولید کند:
+#### تنظیمات
+ برای اضافه کردن تنظیمات فایل‌های ترجمه به فایل pubspec.yaml، می‌توانید از ساختار زیر استفاده کنید. این تنظیمات مشخص می‌کند که Flutter باید فایل‌های ترجمه را پردازش کند و کلاس‌های محلی‌سازی را تولید کند:
 
 ```yaml
 
@@ -107,14 +139,25 @@ dependencies:
   intl: ^0.19.0
 
 flutter:
-  generate: true
+  generate: true // خیلی مهم
 
-  assets:
+  assets: 
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
 ```
 
-## تنظیم Flavor برای اندروید 
+
+ #### استفاده از ترجمه‌ها در کد:
+ بعد از تولید فایل‌های محلی‌سازی با اجرای دستور flutter pub get، می‌توانید به راحتی از متغیرهای تعریف‌شده برای نمایش ترجمه‌ها استفاده کنید. کافیست دستور زیر را در کد خود به‌کار ببرید:
+```dart
+AppLocalizations localizations = AppLocalizations.of(context)!;
+```
+ ### مثال 
+```dart
+Text(localizations.hello);
+```
+---
+## 8. تنظیم Flavor برای اندروید 
 
 برای تنظیم Flavor، این کدها رو به فایل `build.gradle` در پوشه `app` اضافه کنید:
 
@@ -141,35 +184,50 @@ android {
 }
 ```
 
-### اجرای پروژه برای هر Flavor
+ #### اجرای پروژه برای هر Flavor
 
 برای اجرای پروژه در محیط‌های مختلف، از این دستورات استفاده کنید:
 
-- **محیط توسعه (dev):**
+#### محیط توسعه (dev):
 
   ```bash
   flutter run --flavor dev --target lib/main_dev.dart
   ```
 
-- **محیط تولید (prod):**
+#### محیط تولید (prod):
 
   ```bash
   flutter run --flavor prod --target lib/main_prod.dart
   ```
 
-- **محیط محلی (local):**
+#### محیط محلی (local):
 
   ```bash
   flutter run --flavor local --target lib/main_local.dart
   ```
-برای تنظیمات و توضیحات بیشتر میتونید به مستندات فلاتر مراجعه کنید.
- 
+#### تنظیم base url برای محیط ها مختلف
+ باید فایل app_config رو با توجه به نیاز خودتون تغییر بدید.
 ```bash
-https://docs.flutter.dev/deployment/flavors
+  class AppConfig{
+  static Flavor appFlavor = Flavor.production;
+  static String get baseUrl {
+    switch(appFlavor){
+      case Flavor.development:
+        return 'http://192.168.1.7:8080';
+      case Flavor.production:
+      return 'http://192.168.1.3:8080';
+      case Flavor.local:
+        return 'http://172.17.240.1:8080';
+    }
+  }
+}
 ```
 
-### ناوبری (Navigation) آسان (بدون نیاز به context)
-در این قالب، می‌توانید به سادگی و بدون نیاز به context بین صفحات ناوبری کنید. ابتدا یک locator برای مدیریت ناوبری تعریف شده است. برای استفاده از ناوبری، به شکل زیر عمل کنید:
+برای تنظیمات و توضیحات بیشتر میتونید به مستندات فلاتر مراجعه کنید.[flavors](https://docs.flutter.dev/deployment/flavors)
+
+---
+### 9. ناوبری (Navigation) آسان (بدون نیاز به context)
+در این قالب، می‌توانید به سادگی و بدون نیاز به context بین صفحات ناوبری کنید.برای استفاده از ناوبری، به شکل زیر عمل کنید:
 
 ```dart
 final navigation = locator<AppNavigator>();
@@ -183,7 +241,9 @@ navigation.off(UserPage());
 
 این روش باعث می‌شود که نیازی به context برای ناوبری نداشته باشید و کد شما تمیزتر و مدیریت‌پذیرتر باشد.
 
-### 7. تنظیمات ابعاد صفحه با Flutter ScreenUtil
+---
+
+### 10. تنظیمات ابعاد صفحه با Flutter ScreenUtil
 این قالب از پکیج [flutter_screenutil](https://pub.dev/packages/flutter_screenutil) برای مدیریت ابعاد صفحه استفاده می‌کند. برای تنظیم این ویژگی، در فایل `my_app.dart` مقدار `designSize` را مطابق نیاز پروژه خود تغییر دهید:
 
 ```dart
@@ -194,36 +254,42 @@ ScreenUtilInit(
           useInheritedMediaQuery: true,
 )
 ```
-
-### 8. تزریق وابستگی (Dependency injection)
-برای فیچر های جدیدی که ایجاد میکنید باید تزریق وابستگی های فیچر جدید رو داخل فایل service_locator.dart قرار بدید.
-#### مثال تزریق وابستگی
+#### نحوه استفاده از Flutter ScreenUtil
 ```dart
+//If you want to display a rectangle:
+Container(
+  width: 375.w,
+  height: 375.h,
+),
+            
+//If you want to display a square based on width:
+Container(
+  width: 300.w,
+  height: 300.w,
+),
 
-serviceLocator() async {
+//If you want to display a square based on height:
+Container(
+  width: 300.h,
+  height: 300.h,
+),
 
-  locator.registerLazySingleton<AppNavigator>(() => AppNavigator());
-  locator.registerSingleton<Dio>(Dio());
+//If you want to display a square based on minimum(height, width):
+Container(
+  width: 300.r,
+  height: 300.r,
+),
 
- ///############################################## API Provider #############################
-
- locator.registerLazySingleton<UserApiProvider>(() => UserApiProvider());
-
-  ///############################################## Repository #############################
-
-  locator.registerLazySingleton<UserRepository>(()=>UserRepositoryImp(userApiProvider: locator()));
-
-  ///############################################## UseCase #############################
-
-
-   locator.registerLazySingleton<GetUserUseCase>(()=>GetUserUseCase( userRepository: locator()));
-
-
-}
+Text(
+      '16sp,if data is not set in MediaQuery,my font size will change with the system.',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 16.sp,
+      ),
+ ),
 ```
-
-
-### 9. فایل کامل pubspec.yaml
+---
+### 11. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
 ```yaml
@@ -327,7 +393,8 @@ flutter:
     - lib/l10n/intl_en.arb
     - lib/l10n/intl_fa.arb
 ```
-### آپدیت پکیج ها 
+---
+### 12. آپدیت پکیج ها 
 برا نصب آخرین ورژن پکیج ها بعد از اضافه کردن به فایل yaml با دستور زیر به اخرین ورژن ها ارتقا داده میشوند.
 ```yaml
 flutter pub upgrade --major-versions
