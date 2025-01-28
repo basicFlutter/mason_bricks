@@ -1,5 +1,6 @@
 import '../../../../library.dart';
 import '../manager/{{name}}_bloc.dart';
+import '../manager/status/{{useCase}}_status.dart';
 class {{name.pascalCase()}}Page extends StatelessWidget {
   const {{name.pascalCase()}}Page({super.key});
 
