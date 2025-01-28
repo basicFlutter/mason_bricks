@@ -293,7 +293,65 @@ Text(
  ),
 ```
 ---
-### 11. فایل کامل pubspec.yaml
+### 11. تنظیمات فایربیس (Firebase)
+این قالب از Firebase برای مدیریت نوتیفیکیشن‌ها پشتیبانی می‌کند. کلاس‌های موردنیاز برای راه‌اندازی Firebase و نمایش نوتیفیکیشن‌ها در قالب فراهم شده‌اند. برای استفاده از این قابلیت، مراحل زیر را انجام دهید:
+
+### ایجاد پروژه در کنسول Firebase
+ابتدا به [Firebase Console](https://console.firebase.google.com/) بروید و یک پروژه جدید ایجاد کنید.
+
+### دریافت فایل‌های پیکربندی
+- **اندروید**: فایل `google-services.json` را دانلود کرده و در مسیر زیر قرار دهید:  
+  ```
+  android/app/google-services.json
+  ```
+- **iOS**: فایل `GoogleService-Info.plist` را دانلود کرده و در مسیر زیر قرار دهید:  
+  ```
+  ios/Runner/GoogleService-Info.plist
+  ```
+
+### تنظیمات Gradle برای اندروید
+تنظیمات زیر را به فایل‌های `build.gradle` اضافه کنید:
+ در `android/build.gradle`:
+
+  ```gradle
+  dependencies {
+      classpath 'com.google.gms:google-services:4.3.15' // نسخه متناسب با پروژه
+  }
+  ```
+  
+در `android/app/build.gradle`:
+  
+  ```gradle
+  apply plugin: 'com.google.gms.google-services'
+  ```
+
+### تنظیمات iOS
+در فایل `ios/Runner/Info.plist` تنظیمات مربوط به Firebase را طبق [مستندات Firebase](https://firebase.google.com/docs/flutter/setup) اضافه کنید.
+
+### فعال‌سازی کد Firebase در پروژه
+کدهای زیر در فایل `global_app_setup` قرار دارند. این کدها را از حالت کامنت خارج کنید تا Firebase تنظیم و توکن آن مدیریت شود:
+
+```dart
+// for firebase
+final firebaseConfig = FirebaseConfig();
+
+// گرفتن توکن Firebase
+final token = await firebaseConfig.fetchToken();
+logger.i('Firebase Token: $token');
+
+// حذف توکن
+final result = await firebaseConfig.deleteFirebaseToken();
+logger.i('Token Deleted: $result');
+```
+
+## نکات مهم
+- قبل از خارج کردن کدها از حالت کامنت، مطمئن شوید که تنظیمات پروژه Firebase را به طور کامل انجام داده‌اید.
+- از نسخه‌های به‌روز کتابخانه‌های Firebase استفاده کنید تا از بروز مشکلات جلوگیری شود.
+
+با این مراحل، پروژه شما آماده استفاده از Firebase برای نوتیفیکیشن‌ها و سایر قابلیت‌ها خواهد بود. 
+
+---
+### 12. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
 ```yaml
@@ -324,7 +382,6 @@ dependencies:
   pretty_dio_logger: ^1.3.1
   firebase_messaging: ^15.1.1
   firebase_core: ^3.4.1
-  firebase_crashlytics: ^4.1.1
   awesome_notifications: ^0.10.0
   logger: ^2.0.2+1
   flutter_screenutil: ^5.9.0
@@ -397,7 +454,7 @@ flutter:
     - lib/l10n/intl_fa.arb
 ```
 ---
-### 12. آپدیت پکیج ها 
+### 13. آپدیت پکیج ها 
 برا نصب آخرین ورژن پکیج ها بعد از اضافه کردن به فایل yaml با دستور زیر به اخرین ورژن ها ارتقا داده میشوند.
 ```yaml
 flutter pub upgrade --major-versions
@@ -408,7 +465,6 @@ flutter pub upgrade --major-versions
 ```dart
   firebase_messaging: ^15.1.1
   firebase_core: ^3.4.1
-  firebase_crashlytics: ^4.1.1
   awesome_notifications: ^0.10.0
 ```
 
