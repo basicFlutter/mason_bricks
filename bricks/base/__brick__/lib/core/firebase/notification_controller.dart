@@ -38,34 +38,6 @@ class NotificationController {
 
   static Future<void> _handleBackgroundAction(ReceivedAction received) async {
 
-    // adminSocket.on('message:get', (data) {
-    //   AwesomeNotifications().createNotification(
-    //     content: NotificationContent(
-    //       actionType: ActionType.Default,
-    //       wakeUpScreen: true,
-    //       id: 123,
-    //       criticalAlert: true,
-    //       channelKey: 'basic_channel',
-    //       title: 'Hillz dealer',
-    //       body: 'you have new message from a user',
-    //       payload: {"name": "FlutterCampus"},
-    //     ),
-    //   );
-    //   AndroidForegroundService.startAndroidForegroundService(
-    //       content: NotificationContent(
-    //           id: 2341234,
-    //           body: 'Hillz dealer',
-    //           wakeUpScreen: true,
-    //           criticalAlert: true,
-    //           title: 'you have new message from a user',
-    //           channelKey: 'basic_channel',
-    //           notificationLayout: NotificationLayout.Messaging,
-    //           category: NotificationCategory.Service),
-    //       actionButtons: [
-    //         NotificationActionButton(
-    //             key: 'SHOW_SERVICE_DETAILS', label: 'Show details')
-    //       ]);
-    // });
   }
 
   /// Use this method to detect when a new notification or a schedule is created
@@ -98,9 +70,5 @@ class NotificationController {
       ReceivedAction receivedAction,
       ) async {
     logger.i("onActionReceivedMethod");
-    // Get.to(()=> ChatRoomsView());
-    // MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil('/notification-page',
-    //         (route) => (route.settings.name != '/notification-page') || route.isFirst,
-    //     arguments: receivedAction)
   }
 }
