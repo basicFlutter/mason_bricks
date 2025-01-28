@@ -5,9 +5,9 @@ GetIt locator = GetIt.instance;
 
 serviceLocator() async {
   locator.registerLazySingleton<AppNavigator>(() => AppNavigator());
-
   locator.registerSingleton<Dio>(Dio());
 
+  ///############################################## API Provider #############################
 
   ///############################################## Repository #############################
 

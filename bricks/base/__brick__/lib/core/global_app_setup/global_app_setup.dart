@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,9 +28,14 @@ class GlobalAppSetup  with AppLogger {
     WidgetsFlutterBinding.ensureInitialized();
 
     ///for firebase
-    // await _notificationConfig();
-    // await Firebase.initializeApp();
-
+    // final firebaseConfig = FirebaseConfig();
+    // // گرفتن توکن Firebase
+    // final token = await firebaseConfig.fetchToken();
+    // logger.i('Firebase Token: $token');
+    //
+    // // حذف توکن
+    // final result = await firebaseConfig.deleteFirebaseToken();
+    // logger.i('Token Deleted: $result');
 
     ApiProvider().initLogger();
     await ScreenUtil.ensureScreenSize();

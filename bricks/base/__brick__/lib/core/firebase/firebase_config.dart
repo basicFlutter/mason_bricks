@@ -1,114 +1,103 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:test_mason/core/logger/app_logger.dart';
+import '../secure_storage/secure_storage.dart';
 
-import '../../main_prod.dart';
-import '../constants/constants.dart';
-
-class FirebaseConfig {
+class FirebaseConfig with AppLogger {
   FirebaseConfig();
-  late SharedPreferences sp;
 
+  final SecureStorage _secureStorage = SecureStorage(); // استفاده از SecureStorage
 
-  Future<String?> fetchToken() async{
-
-
-    logger.w("Fetch ّFirebase Token");
+  Future<String?> fetchToken() async {
+    logger.w("Fetching Firebase Token");
 
     String? token;
-    sp = await SharedPreferences.getInstance();
-    try{
+
+    try {
+      // مقداردهی اولیه Firebase
       await Firebase.initializeApp();
 
-      // Subscribe to topic
+      // اشتراک در موضوع
       await FirebaseMessaging.instance.subscribeToTopic('news');
 
-      token =  sp.getString("firebaseToken");
+      // خواندن توکن از SecureStorage
+      token = await _secureStorage.read('firebaseToken');
       logger.f(token);
-      if( token== null || token == "") {
-        await FirebaseMessaging.instance.deleteToken().then((value) async {
-          token = await FirebaseMessaging.instance.getToken();
-          logger.e(token);
-          if (token != null) {
-            await sp.setString('firebaseToken', token!);
-          }
 
-        });
+      if (token == null || token.isEmpty) {
+        // حذف توکن قدیمی و گرفتن توکن جدید
+        await FirebaseMessaging.instance.deleteToken();
+        token = await FirebaseMessaging.instance.getToken();
+        logger.e(token);
+
+        if (token != null) {
+          // ذخیره توکن جدید در SecureStorage
+          await _secureStorage.write('firebaseToken', token);
+        }
       }
-
-      Constants.firebaseToken = token ??"";
-
+      // گوش دادن به نوتیفیکیشن‌ها
       listenOnNotifications();
       listenOnNotificationsOpenedApp();
 
       return token;
-
-    }catch (e){
-
-      logger.w(e);
-
+    } catch (e) {
+      logger.e(e);
+      return null;
     }
-    return token;
-    // Isolate.exit(resultPort, token);
   }
 
-  Future<bool> deleteFirebaseToken()async{
-    String? token ;
+  Future<bool> deleteFirebaseToken() async {
+    try {
+      // حذف توکن از SecureStorage
+      await _secureStorage.delete('firebaseToken');
 
-    final sp = await SharedPreferences.getInstance();
-    await sp.remove('token');
-    if(sp.getString("firebaseToken") != null && sp.getString("firebaseToken") != ""){
-      await FirebaseMessaging.instance.deleteToken().then((value) async{
-        token = await FirebaseMessaging.instance.getToken();
-        logger.i(token);
-        if (token != null) {
-          await sp.setString('firebaseToken', token!);
-        }
-        Constants.firebaseToken = token ??"";
-      });
+      // حذف توکن از Firebase Messaging
+      await FirebaseMessaging.instance.deleteToken();
+
+      String? newToken = await FirebaseMessaging.instance.getToken();
+      logger.i(newToken);
+
+      if (newToken != null) {
+        // ذخیره توکن جدید در SecureStorage
+        await _secureStorage.write('firebaseToken', newToken);
+
+      }
+
+      logger.i("Firebase token has been removed.");
+      return true;
+    } catch (e) {
+      logger.e(e);
+      return false;
     }
-    logger.e("firebase token is removed");
-    return true;
   }
 
-
-  void listenOnNotificationsOpenedApp() async {
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async{
-      _backgroundNotification(message);
+  void listenOnNotificationsOpenedApp() {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      _handleBackgroundNotification(message);
     });
   }
 
-  void listenOnNotifications() async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
-      _backgroundNotification(message);
+  void listenOnNotifications() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      _handleBackgroundNotification(message);
     });
-
   }
 
-  static Future<bool> _backgroundNotification(RemoteMessage newChat)async {
-
-
+  static Future<bool> _handleBackgroundNotification(RemoteMessage message) async {
     return AwesomeNotifications().createNotification(
       content: NotificationContent(
-
-        // badge: state.notificationCounter!,
         actionType: ActionType.KeepOnTop,
         wakeUpScreen: true,
         id: 123,
         criticalAlert: true,
         channelKey: 'basic_channel',
-        title: newChat.notification?.title??"" ,
-        body: newChat.notification?.body??"",
+        title: message.notification?.title ?? "",
+        body: message.notification?.body ?? "",
         fullScreenIntent: true,
         payload: {"name": "FlutterCampus"},
-
       ),
-
-
     );
-
   }
-
-
 }
