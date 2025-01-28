@@ -78,9 +78,9 @@ mason make base
 mason make feature --name=نام_فیچر --useCase=نام_مورد_استفاده
 ```
 ### مثال
-برای ایجاد فیچری به نام user_selector با مورد استفاده‌ای به نام get_users، دستور زیر را اجرا کنید:
+برای ایجاد فیچری به نام user با useCase به نام get_users، دستور زیر را اجرا کنید:
 ```bash
-mason make feature --name=user_selector --useCase=get_users
+mason make feature --name=user --useCase=get_users
 ```
 ### 6. چند زبانه 
 برای تعریف متغیرهای چندزبانه در پروژه Flutter، باید فایل‌های موجود در پوشه lib/l10n را ویرایش کنید. در این پوشه، فایل‌های .arb برای هر زبان قرار دارند که ترجمه‌ها را ذخیره می‌کنند. به عنوان مثال، فایل intl_en.arb برای زبان انگلیسی و intl_fa.arb برای زبان فارسی استفاده می‌شود.
