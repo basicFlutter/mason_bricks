@@ -9,18 +9,15 @@ serviceLocator() async {
 
   ///############################################## API Provider #############################
 
+ // locator.registerLazySingleton<UserApiProvider>(() => UserApiProvider());
+
   ///############################################## Repository #############################
 
-  // locator.registerLazySingleton<AcceptRejectTaskRepository>(()=>AcceptRejectTaskRepositoryImpl(acceptRejectTaskApiProvider: locator()));
-
+  //locator.registerLazySingleton<UserRepository>(()=>UserRepositoryImp(userApiProvider: locator()));
 
   ///############################################## UseCase #############################
 
-
-  // locator.registerLazySingleton<GetWorkFlowDetailUseCase>(()=>GetWorkFlowDetailUseCase( workFlowRepository: locator()));
-
-
-
+ // locator.registerLazySingleton<GetUserUseCase>(()=>GetUserUseCase( userRepository: locator()));
 
   ///############################################## Bloc #############################
   // locator.registerSingleton<ChatBloc>(ChatBloc(
