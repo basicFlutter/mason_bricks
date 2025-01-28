@@ -6,9 +6,10 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: Center(
-        child: Text("Splash page"),
+        child: Text(localizations.hello),
       ),
     );
   }
