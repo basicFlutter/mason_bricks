@@ -156,6 +156,12 @@ android {
   ```bash
   flutter run --flavor local --target lib/main_local.dart
   ```
+برای تنظیمات و توضیحات بیشتر میتونید به مستندات فلاتر مراجعه کنید.
+ 
+```bash
+https://docs.flutter.dev/deployment/flavors
+```
+
 ### 7. فایل کامل pubspec.yaml
 همچنین باید آخرین ورژن پکیج های مورد نیاز را نیز نصب کنید.
 
