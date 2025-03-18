@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:test_mason/core/logger/app_logger.dart';
+import '../logger/app_logger.dart';
 import '../secure_storage/secure_storage.dart';
 
 class FirebaseConfig with AppLogger {
