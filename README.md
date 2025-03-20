@@ -54,13 +54,28 @@
 ## مراحل نصب و استفاده
 
 ### 1. اضافه کردن قالب به پروژه
-فایل `mason.yaml` را در ریشه پروژه ایجاد کنید و کد زیر را در آن قرار دهید:
+فایل `mason.yaml` را در ریشه پروژه ایجاد کنید و یکی از کدهای زیر را با توجه به نیاز پروژه در آن قرار دهید. (می‌توانید فایل mason.yaml خود را به گونه‌ای تنظیم کنید که بسته به نیاز پروژه (استفاده از useCase یا عدم استفاده) از ریفرنس مناسب استفاده شود.)
+ 
+ برای پروژه بزرگ (با نیاز به useCase)
 ```yaml
 bricks:
   feature:
     git:
       url: https://github.com/basicFlutter/mason_bricks.git
       path: bricks/feature
+  base:
+    git:
+      url: https://github.com/basicFlutter/mason_bricks.git
+      path: bricks/base
+```
+حالت پروژه‌های کوچک (بدون نیاز به useCase)
+```yaml
+bricks:
+  feature:
+    git:
+      url: https://github.com/basicFlutter/mason_bricks.git
+      path: bricks/feature
+      ref: without_usecase
   base:
     git:
       url: https://github.com/basicFlutter/mason_bricks.git
