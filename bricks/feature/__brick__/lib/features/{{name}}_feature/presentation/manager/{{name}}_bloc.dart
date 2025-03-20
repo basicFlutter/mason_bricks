@@ -10,7 +10,6 @@ part '{{name}}_event.dart';
 part '{{name}}_state.dart';
 
 class {{name.pascalCase()}}Bloc extends Bloc<{{name.pascalCase()}}Event, {{name.pascalCase()}}State> {
-  // {{useCase.pascalCase()}}UseCase {{useCase.camelCase()}}UseCase;
   {{name.pascalCase()}}Repository {{name.camelCase()}}Repository;
   {{name.pascalCase()}}Bloc({required this.{{name.camelCase()}}Repository}) : super({{name.pascalCase()}}State(
       {{useCase.camelCase()}}Status:
