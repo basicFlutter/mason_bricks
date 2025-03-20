@@ -197,7 +197,7 @@ Text(localizations.hello);
 برای استفاده از رنگ‌های سفارشی در برنامه:
 
 ```dart
-final color = Theme.of(context).extension<AppAdditionalColorsEx>()?.success50;
+final color = Theme.of(context).extension<AppColorsTheme>()?.success50;
 // یا با استفاده از extension
 final color = context.appColors.success50;
 ```
@@ -207,8 +207,8 @@ final color = context.appColors.success50;
 
 1. در فایل `color_themes.dart` به کلاس `AppAdditionalColorsEx` یک فیلد جدید اضافه کنید:
 ```dart
-class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
-  const AppAdditionalColorsEx({
+class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
+  const AppColorsTheme({
     // ... رنگ‌های موجود ...
     required this.newColor,
   });
@@ -217,11 +217,11 @@ class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
   
   // اضافه کردن به متدهای copyWith و lerp
   @override
-  AppAdditionalColorsEx copyWith({
+  AppColorsTheme copyWith({
     // ... رنگ‌های موجود ...
     Color? newColor,
   }) {
-    return AppAdditionalColorsEx(
+    return AppColorsTheme(
       // ... رنگ‌های موجود ...
       newColor: newColor ?? this.newColor,
     );
@@ -232,7 +232,7 @@ class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
 2. رنگ جدید را در کلاس‌های `LightColorThemes` و `DarkColorThemes` تعریف کنید:
 ```dart
 class LightColorThemes {
-  static final appAdditionalColors = AppAdditionalColorsEx(
+  static final appColorsTheme = AppColorsTheme(
     // ... رنگ‌های موجود ...
     newColor: Color(0xFF000000),
   );

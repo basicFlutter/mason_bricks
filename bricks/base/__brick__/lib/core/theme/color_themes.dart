@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// تعریف رنگ‌های اضافی برای حالت روشن
 class LightColorThemes {
-  static final appAdditionalColors = AppAdditionalColorsEx(
+  static final appAdditionalColors = AppColorsTheme(
     success50: Color(0xffECFDF3),
     success700: Color(0xff027A48),
     warningBackground: Color(0xffFFF5DA),
@@ -19,7 +19,7 @@ class LightColorThemes {
 
 /// تعریف رنگ‌های اضافی برای حالت تاریک
 class DarkColorThemes {
-  static final appAdditionalColors = AppAdditionalColorsEx(
+  static final appAdditionalColors = AppColorsTheme(
     success50: Color(0xffECFDF3),
     success700: Color(0xff027A48),
     warningBackground: Color(0xffFFF5DA),
@@ -34,8 +34,8 @@ class DarkColorThemes {
 }
 
 
-class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
-  const AppAdditionalColorsEx({
+class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
+  const AppColorsTheme({
     required this.success50,
     required this.success700,
     required this.error50,
@@ -67,11 +67,11 @@ class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
   final Color lightBackgroundSubded;
 
   @override
-  ThemeExtension<AppAdditionalColorsEx> lerp(AppAdditionalColorsEx? other, double t) {
-    if (other is! AppAdditionalColorsEx) {
+  ThemeExtension<AppColorsTheme> lerp(AppColorsTheme? other, double t) {
+    if (other is! AppColorsTheme) {
       return this;
     }
-    return AppAdditionalColorsEx(
+    return AppColorsTheme(
       success700: Color.lerp(success700, other.success700, t)!,
       success50: Color.lerp(success50, other.success50, t)!,
       error50: Color.lerp(error50, other.error50, t)!,
@@ -86,7 +86,7 @@ class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
   }
 
   @override
-  AppAdditionalColorsEx copyWith({
+  AppColorsTheme copyWith({
     Color? success50,
     Color? success700,
     Color? error50,
@@ -98,7 +98,7 @@ class AppAdditionalColorsEx extends ThemeExtension<AppAdditionalColorsEx> {
     Color? lightBackgroundSubded,
     Color? secondaryErrorText,
   }) {
-    return AppAdditionalColorsEx(
+    return AppColorsTheme(
       success50: success50 ?? this.success50,
       success700: success700 ?? this.success700,
       error50: error50 ?? this.error50,
