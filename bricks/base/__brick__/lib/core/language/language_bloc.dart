@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../secure_storage/secure_storage.dart';
-import '../../domain/language_event.dart';
-import '../../domain/language_state.dart';
+import 'language_event.dart';
+import 'language_state.dart';
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   final _storage = SecureStorage();

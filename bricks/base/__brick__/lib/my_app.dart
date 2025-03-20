@@ -1,10 +1,9 @@
+import 'core/language/language_state.dart';
 import 'library.dart';
 import '/../core/theme/app_theme.dart';
 import '/../core/theme/bloc/theme_bloc.dart';
 import '/../core/theme/bloc/theme_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '/../core/language/language_bloc.dart';
-import '/../features/language/domain/language_state.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
