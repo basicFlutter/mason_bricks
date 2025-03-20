@@ -7,7 +7,7 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => {{name.pascalCase()}}Bloc({{useCase.camelCase()}}UseCase: locator())..add({{useCase.pascalCase()}}()),
+      create: (context) => {{name.pascalCase()}}Bloc({{name.camelCase()}}Repository: locator())..add({{useCase.pascalCase()}}()),
       child: Builder(
           builder: (context) {
             return  Scaffold(

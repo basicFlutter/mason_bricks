@@ -5,6 +5,7 @@ import '../../../../core/error/response_error.dart';
 import '../../../../core/success_response/success_response.dart';
 import '../../presentation/manager/status/{{useCase}}_status.dart';
 import '/../core/params/no_params.dart';
+import '../../domain/repositories/{{name.camelCase()}}_repository.dart';
 
 part '{{name}}_event.dart';
 part '{{name}}_state.dart';
