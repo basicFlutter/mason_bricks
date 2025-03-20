@@ -6,7 +6,7 @@ import 'text_themes.dart';
 extension AppThemeExtension on ThemeData {
   /// دسترسی به رنگ‌های سفارشی
   /// مثال: Theme.of(context).appColors
-  AppAdditionalColorsEx get appColors => extension<AppAdditionalColorsEx>() ?? LightColorThemes.appAdditionalColors;
+  AppColorsTheme get appColors => extension<AppColorsTheme>() ?? LightColorThemes.appAdditionalColors;
 
   /// دسترسی به استایل‌های متنی سفارشی
   /// مثال: Theme.of(context).appTextTheme
@@ -21,7 +21,7 @@ extension ThemeGetter on BuildContext {
 
   /// دسترسی به رنگ‌های سفارشی
   /// مثال: context.appColors
-  AppAdditionalColorsEx get appColors => theme.appColors;
+  AppColorsTheme get appColors => theme.appColors;
 
   /// دسترسی به استایل‌های متنی سفارشی
   /// مثال: context.appTextTheme
