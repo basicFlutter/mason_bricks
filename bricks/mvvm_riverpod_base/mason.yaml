@@ -1,0 +1,17 @@
+name: mvvm_riverpod_base
+description: A professional MVVM base template with Riverpod for Flutter applications
+version: 0.1.0
+
+vars:
+  project_name:
+    type: string
+    description: The name of your project
+    prompt: What is the name of your project?
+  organization:
+    type: string
+    description: The organization name
+    prompt: What is your organization name?
+  description:
+    type: string
+    description: The project description
+    prompt: What is the project description? 
