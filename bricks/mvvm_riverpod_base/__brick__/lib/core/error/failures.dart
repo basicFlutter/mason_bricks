@@ -23,15 +23,15 @@ class NetworkFailure extends Failure {
 
 class ValidationFailure extends Failure {
   final String message;
-  const ValidationFailure(this.message) : super([message]);
+  const ValidationFailure(this.message) : super(const <dynamic>[message]);
 }
 
 class AuthenticationFailure extends Failure {
   final String message;
-  const AuthenticationFailure(this.message) : super([message]);
+  const AuthenticationFailure(this.message) : super(const <dynamic>[message]);
 }
 
 class UnknownFailure extends Failure {
   final String message;
-  const UnknownFailure(this.message) : super([message]);
+  const UnknownFailure(this.message) : super(const <dynamic>[message]);
 } 
