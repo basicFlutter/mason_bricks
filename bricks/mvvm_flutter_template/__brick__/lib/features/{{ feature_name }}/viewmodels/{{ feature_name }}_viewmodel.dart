@@ -36,7 +36,7 @@ class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalC
     }
   }
 
-  Future<void> update(int id, {{ feature_name.pascalCase() }}Model model) async {
+  Future<void> updateItem(int id, {{ feature_name.pascalCase() }}Model model) async {
     state = const AsyncLoading();
     try {
       final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
