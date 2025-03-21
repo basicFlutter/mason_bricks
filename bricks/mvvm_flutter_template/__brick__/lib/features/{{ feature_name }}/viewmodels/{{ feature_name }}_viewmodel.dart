@@ -1,5 +1,6 @@
 // ViewModel مربوط به ویژگی با استفاده از StateNotifier و Riverpod
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/{{ feature_name }}_model.dart';
 import '../../../data/repositories/{{ feature_name }}_repository.dart';
 
 final {{ feature_name.camelCase() }}ViewModelProvider =
@@ -13,17 +14,24 @@ final {{ feature_name.camelCase() }}ViewModelProvider =
 
 class {{ feature_name.pascalCase() }}State {
   final bool isLoading;
-  final String data;
+  final {{ feature_name.pascalCase() }}Model? data;
+  final String? error;
 
-  {{ feature_name.pascalCase() }}State({this.isLoading = false, this.data = ''});
+  {{ feature_name.pascalCase() }}State({
+    this.isLoading = false,
+    this.data,
+    this.error,
+  });
 
   {{ feature_name.pascalCase() }}State copyWith({
     bool? isLoading,
-    String? data,
+    {{ feature_name.pascalCase() }}Model? data,
+    String? error,
   }) {
     return {{ feature_name.pascalCase() }}State(
       isLoading: isLoading ?? this.isLoading,
       data: data ?? this.data,
+      error: error ?? this.error,
     );
   }
 }
@@ -35,9 +43,15 @@ class {{ feature_name.pascalCase() }}ViewModel extends StateNotifier<{{ feature_
       : super({{ feature_name.pascalCase() }}State());
 
   Future<void> loadData() async {
-    state = state.copyWith(isLoading: true);
-    // فراخوانی repository
-    final result = await repository.getData();
-    state = state.copyWith(isLoading: false, data: result.name);
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final result = await repository.getData();
+      state = state.copyWith(isLoading: false, data: result);
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
   }
 } 

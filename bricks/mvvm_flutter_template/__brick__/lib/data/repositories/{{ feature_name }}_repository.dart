@@ -1,5 +1,5 @@
 // پیاده‌سازی repository مربوط به ویژگی مورد نظر
-import '../models/{{ feature_name }}_model.dart';
+import '../../features/{{ feature_name }}/models/{{ feature_name }}_model.dart';
 import '../providers/{{ feature_name }}_api_provider.dart';
 
 class {{ feature_name.pascalCase() }}Repository {
