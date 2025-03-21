@@ -103,7 +103,6 @@ lib/
 ## نحوه استفاده از Provider ها
 
 ```dart
-// استفاده از ApiClient
 final apiClient = ref.watch(apiClientProvider);
 
 // استفاده از NetworkInfo
@@ -184,14 +183,14 @@ class AuthInterceptor extends Interceptor {
 
 ## عیب‌یابی
 
-1. اگر با خطای "Invalid constant value" مواجه شدید:
+اگر با خطای "Invalid constant value" مواجه شدید:
    - مطمئن شوید که از `const` در constructor های `Failure` استفاده کرده‌اید.
    - مطمئن شوید که لیست‌ها به صورت `const <dynamic>[]` تعریف شده‌اند.
 
-2. اگر با خطای "Abstract classes can't be instantiated" مواجه شدید:
+ اگر با خطای "Abstract classes can't be instantiated" مواجه شدید:
    - مطمئن شوید که از `NetworkInfoImpl` به جای `NetworkInfo` استفاده می‌کنید.
 
-3. اگر با خطای "Missing concrete implementation" مواجه شدید:
+ اگر با خطای "Missing concrete implementation" مواجه شدید:
    - مطمئن شوید که تمام متدهای abstract را پیاده‌سازی کرده‌اید.
 
 ## مشارکت
