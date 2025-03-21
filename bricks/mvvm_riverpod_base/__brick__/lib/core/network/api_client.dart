@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../config/dio_config.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
+import '../error/error_handler.dart';
 import 'network_info.dart';
 
 abstract class ApiClient {
@@ -14,15 +15,15 @@ abstract class ApiClient {
 
 class DioClient implements ApiClient {
   final Dio _dio;
-  final NetworkInfo networkInfo;
+  final NetworkInfo _networkInfo;
 
-  DioClient._internal(this._dio, this.networkInfo);
+  DioClient._internal(this._dio, this._networkInfo);
 
   static DioClient? _instance;
   static DioClient get instance {
     _instance ??= DioClient._internal(
       DioConfig.createDio(),
-      NetworkInfo(),
+      NetworkInfoImpl(InternetConnectionChecker()),
     );
     return _instance!;
   }
@@ -30,7 +31,7 @@ class DioClient implements ApiClient {
   @override
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}) async {
     try {
-      if (!await networkInfo.isConnected) {
+      if (!await _networkInfo.isConnected) {
         throw NetworkFailure();
       }
       final response = await _dio.get(path, queryParameters: queryParameters);
@@ -45,7 +46,7 @@ class DioClient implements ApiClient {
   @override
   Future<dynamic> post(String path, {dynamic data}) async {
     try {
-      if (!await networkInfo.isConnected) {
+      if (!await _networkInfo.isConnected) {
         throw NetworkFailure();
       }
       final response = await _dio.post(path, data: data);
@@ -60,7 +61,7 @@ class DioClient implements ApiClient {
   @override
   Future<dynamic> put(String path, {dynamic data}) async {
     try {
-      if (!await networkInfo.isConnected) {
+      if (!await _networkInfo.isConnected) {
         throw NetworkFailure();
       }
       final response = await _dio.put(path, data: data);
@@ -75,7 +76,7 @@ class DioClient implements ApiClient {
   @override
   Future<dynamic> delete(String path) async {
     try {
-      if (!await networkInfo.isConnected) {
+      if (!await _networkInfo.isConnected) {
         throw NetworkFailure();
       }
       final response = await _dio.delete(path);
@@ -90,7 +91,7 @@ class DioClient implements ApiClient {
   @override
   Future<dynamic> patch(String path, {dynamic data}) async {
     try {
-      if (!await networkInfo.isConnected) {
+      if (!await _networkInfo.isConnected) {
         throw NetworkFailure();
       }
       final response = await _dio.patch(path, data: data);
