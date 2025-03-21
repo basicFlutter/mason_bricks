@@ -1,57 +1,27 @@
-// ViewModel مربوط به ویژگی با استفاده از StateNotifier و Riverpod
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ViewModel مربوط به ویژگی با استفاده از Riverpod Generator
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/{{ feature_name }}_model.dart';
 import '../../../data/repositories/{{ feature_name }}_repository.dart';
 
-final {{ feature_name.camelCase() }}ViewModelProvider =
-    StateNotifierProvider<{{ feature_name.pascalCase() }}ViewModel, {{ feature_name.pascalCase() }}State>(
-  (ref) => {{ feature_name.pascalCase() }}ViewModel(
-    repository: {{ feature_name.pascalCase() }}Repository(
-      api: ref.read({{ feature_name.camelCase() }}ApiProvider),
-    ),
-  ),
-);
+part '{{ feature_name }}_viewmodel.g.dart';
 
-class {{ feature_name.pascalCase() }}State {
-  final bool isLoading;
-  final {{ feature_name.pascalCase() }}Model? data;
-  final String? error;
-
-  {{ feature_name.pascalCase() }}State({
-    this.isLoading = false,
-    this.data,
-    this.error,
-  });
-
-  {{ feature_name.pascalCase() }}State copyWith({
-    bool? isLoading,
-    {{ feature_name.pascalCase() }}Model? data,
-    String? error,
-  }) {
-    return {{ feature_name.pascalCase() }}State(
-      isLoading: isLoading ?? this.isLoading,
-      data: data ?? this.data,
-      error: error ?? this.error,
-    );
+@riverpod
+class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalCase() }}ViewModel {
+  @override
+  FutureOr<{{ feature_name.pascalCase() }}Model?> build() async {
+    return null;
   }
-}
-
-class {{ feature_name.pascalCase() }}ViewModel extends StateNotifier<{{ feature_name.pascalCase() }}State> {
-  final {{ feature_name.pascalCase() }}Repository repository;
-
-  {{ feature_name.pascalCase() }}ViewModel({required this.repository})
-      : super({{ feature_name.pascalCase() }}State());
 
   Future<void> loadData() async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = const AsyncLoading();
     try {
-      final result = await repository.getData();
-      state = state.copyWith(isLoading: false, data: result);
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
+      final repository = {{ feature_name.pascalCase() }}Repository(
+        api: ref.read({{ feature_name.camelCase() }}ApiProvider),
       );
+      final result = await repository.getData();
+      state = AsyncData(result);
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
     }
   }
 } 

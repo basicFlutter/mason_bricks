@@ -19,4 +19,9 @@ vars:
   package_name:
     type: string
     description: نام پکیج برای پروژه (به صورت com.example.project)
-    prompt: نام پکیج پروژه چیست؟ 
+    prompt: نام پکیج پروژه چیست؟
+  json_schema:
+    type: string
+    description: JSON Schema برای مدل (اختیاری)
+    prompt: آیا می‌خواهید JSON Schema را وارد کنید؟ (اختیاری)
+    default: "" 
