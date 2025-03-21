@@ -1,25 +1,54 @@
 // ViewModel مربوط به ویژگی با استفاده از Riverpod Generator
+import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/{{ feature_name }}_model.dart';
-import '../../../data/repositories/{{ feature_name }}_repository.dart';
+import '../../../models/{{ feature_name }}_model.dart';
+import '../../../models/{{ feature_name }}_api.dart';
 
 part '{{ feature_name }}_viewmodel.g.dart';
 
 @riverpod
 class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalCase() }}ViewModel {
   @override
-  FutureOr<{{ feature_name.pascalCase() }}Model?> build() async {
-    return null;
+  FutureOr<List<{{ feature_name.pascalCase() }}Model>> build() async {
+    return [];
   }
 
-  Future<void> loadData() async {
+  Future<void> loadAll() async {
     state = const AsyncLoading();
     try {
-      final repository = {{ feature_name.pascalCase() }}Repository(
-        api: ref.read({{ feature_name.camelCase() }}ApiProvider),
-      );
-      final result = await repository.getData();
+      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      final result = await api.getAll();
       state = AsyncData(result);
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+    }
+  }
+
+  Future<void> create({{ feature_name.pascalCase() }}Model model) async {
+    try {
+      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      await api.create(model);
+      await loadAll(); // بارگذاری مجدد لیست
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+    }
+  }
+
+  Future<void> update(int id, {{ feature_name.pascalCase() }}Model model) async {
+    try {
+      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      await api.update(id, model);
+      await loadAll(); // بارگذاری مجدد لیست
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+    }
+  }
+
+  Future<void> delete(int id) async {
+    try {
+      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      await api.delete(id);
+      await loadAll(); // بارگذاری مجدد لیست
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
     }
