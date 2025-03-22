@@ -2,25 +2,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../viewmodels/{{ feature_name }}_viewmodel.dart';
+import '../viewmodels/{{feature_name.snakeCase}}_feature_viewmodel.dart';
 
-class {{ feature_name.pascalCase() }}View extends ConsumerStatefulWidget {
-  const {{ feature_name.pascalCase() }}View({Key? key}) : super(key: key);
+class {{feature_name.pascalCase()}}View extends ConsumerStatefulWidget {
+  const {{feature_name.pascalCase()}}View({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<{{ feature_name.pascalCase() }}View> createState() => _{{ feature_name.pascalCase() }}ViewState();
+  ConsumerState<{{feature_name.pascalCase()}}View> createState() => _{{feature_name.pascalCase()}}ViewState();
 }
 
-class _{{ feature_name.pascalCase() }}ViewState extends ConsumerState<{{ feature_name.pascalCase() }}View> {
+class _{{feature_name.pascalCase()}}ViewState extends ConsumerState<{{feature_name.pascalCase()}}View> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read({{ feature_name.camelCase() }}ViewModelProvider.notifier).loadAll());
+    Future.microtask(() => ref.read({{feature_name.camelCase()}}ViewModelProvider.notifier).loadAll());
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch({{ feature_name.camelCase() }}ViewModelProvider);
+    final viewModel = ref.watch({{feature_name.camelCase()}}ViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class _{{ feature_name.pascalCase() }}ViewState extends ConsumerState<{{ feature
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      ref.read({{ feature_name.camelCase() }}ViewModelProvider.notifier).delete(item.id);
+                      ref.read({{feature_name.camelCase()}}ViewModelProvider.notifier).delete(item.id);
                     },
                   ),
                 ],

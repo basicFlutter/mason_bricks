@@ -1,10 +1,10 @@
 // ViewModel مربوط به ویژگی با استفاده از Riverpod Generator
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/{{ feature_name }}_model.dart';
-import '../models/{{ feature_name }}_api.dart';
+import '../models/{{feature_name.snakeCase}}_model.dart';
+import '../models/{{feature_name.snakeCase}}_api.dart';
 
-part '{{ feature_name }}_viewmodel.g.dart';
+part '{{feature_name.snakeCase}}_feature_viewmodel.g.dart';
 
 @riverpod
 class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalCase() }}ViewModel {

@@ -1,8 +1,8 @@
 // مدل داده‌ای با استفاده از Freezed
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '{{ feature_name }}_model.freezed.dart';
-part '{{ feature_name }}_model.g.dart';
+part '{{feature_name.snakeCase}}_feature_model.freezed.dart';
+part '{{feature_name.snakeCase}}_feature_model.g.dart';
 
 @freezed
 class {{ feature_name.pascalCase() }}Model with _${{ feature_name.pascalCase() }}Model {

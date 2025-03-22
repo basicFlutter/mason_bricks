@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/exports.dart';
-import '{{ feature_name }}_model.dart';
+import '{{feature_name.snakeCase}}_feature_model.dart';
 
 final {{ feature_name.camelCase() }}ApiProvider = Provider<{{ feature_name.pascalCase() }}Api>((ref) {
   return {{ feature_name.pascalCase() }}Api(ref.watch(apiClientProvider));
