@@ -4,7 +4,7 @@ import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../error/error_handler.dart';
 import 'network_info.dart';
-
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 abstract class ApiClient {
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters});
   Future<dynamic> post(String path, {dynamic data});
@@ -23,7 +23,7 @@ class DioClient implements ApiClient {
   static DioClient get instance {
     _instance ??= DioClient._internal(
       DioConfig.createDio(),
-      NetworkInfoImpl(InternetConnectionChecker()),
+      NetworkInfoImpl(InternetConnectionChecker.instance),
     );
     return _instance!;
   }
