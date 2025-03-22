@@ -88,7 +88,6 @@ lib/
 ## مثال استفاده
 
 ```dart
-// مثال استفاده از ViewModel
 class HomeViewModel extends StateNotifier<HomeState> {
   HomeViewModel() : super(HomeState.initial());
 
