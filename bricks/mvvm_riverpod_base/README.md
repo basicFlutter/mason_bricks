@@ -113,6 +113,138 @@ final networkInfo = ref.watch(networkInfoProvider);
 final dio = ref.watch(dioProvider);
 ```
 
+## نحوه استفاده از Theme
+
+این قالب از سیستم تم پیشرفته با پشتیبانی از حالت‌های روشن و تاریک استفاده می‌کند. برای استفاده از تم در برنامه:
+
+```dart
+// تغییر تم
+ref.read(themeProvider.notifier).toggleTheme();
+
+// دریافت وضعیت فعلی تم
+final isDarkMode = ref.watch(themeProvider);
+
+// استفاده از ThemeData
+final themeData = ref.watch(themeDataProvider);
+
+// استفاده از رنگ‌های سفارشی
+final colors = ref.watch(colorThemeProvider);
+
+// استفاده از استایل‌های متنی سفارشی
+final textStyles = ref.watch(textThemeProvider);
+```
+
+### ساختار تم
+
+```
+lib/
+└── core/
+    └── theme/
+        ├── app_theme.dart        // تنظیمات اصلی تم
+        ├── color_themes.dart     // رنگ‌های سفارشی
+        ├── text_themes.dart      // استایل‌های متنی
+        └── theme_provider.dart   // مدیریت وضعیت تم
+```
+
+### تنظیمات تم
+
+1. تنظیمات اصلی تم را در `app_theme.dart` انجام دهید:
+```dart
+class AppTheme {
+  static ThemeData get lightTheme => ThemeData(
+    // تنظیمات تم روشن
+  );
+
+  static ThemeData get darkTheme => ThemeData(
+    // تنظیمات تم تاریک
+  );
+}
+```
+
+2. رنگ‌های سفارشی را در `color_themes.dart` تعریف کنید:
+```dart
+class LightColorThemes {
+  static const appAdditionalColors = AppColorsTheme(
+    // رنگ‌های سفارشی تم روشن
+  );
+}
+
+class DarkColorThemes {
+  static const appAdditionalColors = AppColorsTheme(
+    // رنگ‌های سفارشی تم تاریک
+  );
+}
+```
+
+3. استایل‌های متنی را در `text_themes.dart` تعریف کنید:
+```dart
+class LightTextThemes {
+  static const appTextTheme = AppTextTheme(
+    // استایل‌های متنی تم روشن
+  );
+}
+
+class DarkTextThemes {
+  static const appTextTheme = AppTextTheme(
+    // استایل‌های متنی تم تاریک
+  );
+}
+```
+
+## نحوه استفاده از مدیریت زبان
+
+این قالب از سیستم مدیریت زبان چند زبانه با استفاده از Riverpod استفاده می‌کند. برای استفاده از سیستم زبان در برنامه:
+
+```dart
+// تغییر زبان
+ref.read(languageProvider.notifier).changeLanguage('en');
+
+// دریافت زبان فعلی
+final currentLocale = ref.watch(currentLocaleProvider);
+
+// استفاده در MaterialApp
+MaterialApp(
+  locale: ref.watch(currentLocaleProvider),
+  localizationsDelegates: const [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: const [
+    Locale('fa'),
+    Locale('en'),
+  ],
+)
+```
+
+### ساختار مدیریت زبان
+
+```
+lib/
+└── core/
+    └── language/
+        └── language_provider.dart   // مدیریت وضعیت زبان
+```
+
+### تنظیمات زبان
+
+1. تنظیم زبان پیش‌فرض در `language_provider.dart`:
+```dart
+@riverpod
+class Language extends _$Language {
+  @override
+  Locale build() => const Locale('fa'); // زبان پیش‌فرض
+
+  void changeLanguage(String languageCode) {
+    state = Locale(languageCode);
+  }
+}
+```
+
+2. اضافه کردن زبان‌های جدید:
+   - فایل‌های ترجمه را در پوشه `assets/translations` قرار دهید
+   - زبان جدید را به `supportedLocales` در `MaterialApp` اضافه کنید
+
 ## نحوه استفاده از Error Handling
 
 ```dart
