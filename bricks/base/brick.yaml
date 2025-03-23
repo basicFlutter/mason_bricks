@@ -15,7 +15,7 @@ version: 0.1.0+1
 environment:
   mason: ^0.1.0
 vars:
-  project_name:
+  name:
     type: string
     description: |
       نام پروژه Flutter شما که در فایل `pubspec.yaml` تعریف شده است. این نام در بسیاری از قسمت‌های پروژه، مانند شناسه پروژه، نام بسته (package) و موارد دیگر استفاده می‌شود. به طور پیش‌فرض، این متغیر به عنوان نام پروژه‌ای با مقدار `my_template` تنظیم شده است.
