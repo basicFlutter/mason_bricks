@@ -14,5 +14,11 @@ version: 0.1.0+1
 # It includes the version of mason that the brick requires.
 environment:
   mason: ^0.1.0
-
+vars:
+  project_name:
+    type: string
+    description: |
+      نام پروژه Flutter شما که در فایل `pubspec.yaml` تعریف شده است. این نام در بسیاری از قسمت‌های پروژه، مانند شناسه پروژه، نام بسته (package) و موارد دیگر استفاده می‌شود. به طور پیش‌فرض، این متغیر به عنوان نام پروژه‌ای با مقدار `my_template` تنظیم شده است.
+    default: my_template
+    prompt: What is your project name?
 
