@@ -39,6 +39,8 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   internet_connection_checker: ^3.0.1
 
+dependency_overrides:
+  intl: ^0.20.0
 
 dev_dependencies:
   flutter_test:
