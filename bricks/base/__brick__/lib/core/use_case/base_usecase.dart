@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import '/core/error/response_error.dart';
+import '../error/failures.dart';
 
 abstract class BaseUseCase<Type, InputParams> {
-  Future<Either<ResponseError, Type>> call(InputParams params);
+  Future<Either<Failure, Type>> call(InputParams params);
 }

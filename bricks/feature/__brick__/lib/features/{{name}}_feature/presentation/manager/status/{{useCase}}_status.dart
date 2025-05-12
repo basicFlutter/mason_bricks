@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../../../core/error/response_error.dart';
+import '../../../../../core/error/failures.dart';
 abstract class {{useCase.pascalCase()}}Status extends Equatable{}
 
 class {{useCase.pascalCase()}}Init extends {{useCase.pascalCase()}}Status{
@@ -19,10 +19,10 @@ class {{useCase.pascalCase()}}Completed extends {{useCase.pascalCase()}}Status{
 }
 
 class {{useCase.pascalCase()}}Error extends {{useCase.pascalCase()}}Status{
-  final ResponseError responseError;
-  {{useCase.pascalCase()}}Error({required this.responseError});
+  final Failure failure;
+  {{useCase.pascalCase()}}Error({required this.failure});
   @override
-  List<Object?> get props => [responseError];
+  List<Object?> get props => [failure];
 }
 
 
