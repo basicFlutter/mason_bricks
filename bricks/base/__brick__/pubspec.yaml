@@ -37,6 +37,7 @@ dependencies:
   shamsi_date: ^1.0.4
   package_info_plus: ^8.0.2
   flutter_secure_storage: ^9.2.4
+  internet_connection_checker: ^1.0.0+1
 
 
 dev_dependencies:
