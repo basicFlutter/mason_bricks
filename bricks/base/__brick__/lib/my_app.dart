@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = locator<AppNavigator>();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),
@@ -36,9 +35,10 @@ class MyApp extends StatelessWidget {
                       theme: AppTheme.lightTheme,
                       darkTheme: AppTheme.darkTheme,
                       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-                      navigatorKey: navigator.navigatorKey,
-                      onGenerateRoute: navigator.onGenerateRoute,
-                      initialRoute: navigator.initialRoute,
+                      navigatorKey: AppNavigator().navigatorKey,
+                      scaffoldMessengerKey: AppNavigator().scaffoldMessengerKey,
+                      onGenerateRoute: AppNavigator().onGenerateRoute,
+                      initialRoute: AppNavigator().initialRoute,
                     );
                   },
                 ),
