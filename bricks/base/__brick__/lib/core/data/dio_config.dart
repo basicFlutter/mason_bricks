@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
+import '../global_app_setup/app_config.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -14,7 +14,7 @@ class DioConfig {
   }) {
     final dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl ?? '',
+        baseUrl: baseUrl ?? AppConfig.baseUrl,
         connectTimeout: connectTimeout ?? const Duration(seconds: 30),
         receiveTimeout: receiveTimeout ?? const Duration(seconds: 30),
         sendTimeout: sendTimeout ?? const Duration(seconds: 30),
