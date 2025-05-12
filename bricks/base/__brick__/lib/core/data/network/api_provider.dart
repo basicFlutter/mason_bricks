@@ -1,89 +1,140 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import '/../core/data/network/api_intercepror.dart';
-import '/../core/secure_storage/secure_storage.dart';
-import '/../core/data/network/api_interface.dart';
-import '../../global_app_setup/app_config.dart';
-import '../../constants/constants.dart';
-class ApiProvider extends ApiProviderInterface {
-  ApiProvider._internal() {
-    // Initialize the interceptor here after 'dio' is fully initialized.
-    networkServiceInterceptor = NetworkServiceInterceptor(
-      SecureStorage(),
-      dio,
-    );
-  }
-
-  static final ApiProvider _singleton = ApiProvider._internal();
-
-  factory ApiProvider() {
-    return _singleton;
-  }
-
-  static BaseOptions optionsDio = BaseOptions(
-    baseUrl: AppConfig.baseUrl,
-    receiveDataWhenStatusError: true,
-    connectTimeout: const Duration(seconds: 120),
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-  );
-
-  final Dio dio = Dio(optionsDio);
-
-  late final NetworkServiceInterceptor networkServiceInterceptor;
-
-  @override
-  Future<Response> get(path, {dynamic data, Options? options, String? baseUrl}) async {
-    if (baseUrl != null) {
-      dio.options.baseUrl = baseUrl;
-    }
-    return await dio.get(path, queryParameters: data, options: options);
-  }
-
-  @override
-  Future<Response> post(path, {dynamic data, Options? options, String? baseUrl}) async {
-    if (baseUrl != null) {
-      dio.options.baseUrl = baseUrl;
-    }
-    return await dio.post(path, data: data, options: options);
-  }
-
-  @override
-  Future<Response> put(path, {Map? data, Options? options}) async =>
-      await dio.put(path, data: data, options: options);
-
-  @override
-  Future<Response> delete(path, {Options? options}) async =>
-      await dio.delete(path, options: options);
-
-  @override
-  Future<Response> patch(path, {dynamic data, Options? options}) async =>
-      await dio.patch(path, options: options, data: data);
-
-  @override
-  void initLogger() async {
-    dio.interceptors.add(PrettyDioLogger(
-      requestHeader: false,
-      requestBody: true,
-      request: true,
-      responseBody: true,
-      responseHeader: false,
-      compact: false,
-      enabled: kDebugMode,
-    ));
-    setErrorHandler();
-  }
-
-  @override
-  Future<void> setToken() async {
-    dio.options.headers.addAll({"Authorization": "Bearer ${Constants.accessToken}"});
-  }
-
-  @override
-  void setErrorHandler() {
-    dio.interceptors.add(networkServiceInterceptor);
-  }
+import '../../error/exceptions.dart';
+import '../../error/failures.dart';
+import '../dio_config.dart';
+import 'network_info.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+abstract class ApiProviderInterface {
+  Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters});
+  Future<dynamic> post(String path, {dynamic data});
+  Future<dynamic> put(String path, {dynamic data});
+  Future<dynamic> delete(String path);
+  Future<dynamic> patch(String path, {dynamic data});
 }
+
+class ApiProvider implements ApiProviderInterface {
+  final Dio _dio;
+  final NetworkInfo _networkInfo;
+
+  ApiProvider._internal(this._dio, this._networkInfo);
+
+  static ApiProvider? _instance;
+  static ApiProvider get instance {
+    _instance ??= ApiProvider._internal(
+      DioConfig.createDio(),
+      NetworkInfoImpl(InternetConnectionChecker.createInstance()),
+    );
+    return _instance!;
+  }
+
+  @override
+  Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        throw NetworkFailure();
+      }
+      final response = await _dio.get(path, queryParameters: queryParameters);
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<dynamic> post(String path, {dynamic data}) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        throw NetworkFailure();
+      }
+      final response = await _dio.post(path, data: data);
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<dynamic> put(String path, {dynamic data}) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        throw NetworkFailure();
+      }
+      final response = await _dio.put(path, data: data);
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<dynamic> delete(String path) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        throw NetworkFailure();
+      }
+      final response = await _dio.delete(path);
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<dynamic> patch(String path, {dynamic data}) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        throw NetworkFailure();
+      }
+      final response = await _dio.patch(path, data: data);
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  dynamic _handleResponse(Response response) {
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return response.data;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  Exception _handleDioError(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return TimeoutException();
+      case DioExceptionType.badResponse:
+        switch (error.response?.statusCode) {
+          case 400:
+            return BadRequestException();
+          case 401:
+            return UnauthorizedException();
+          case 403:
+            return ForbiddenException();
+          case 404:
+            return NotFoundException();
+          case 500:
+            return ServerException();
+          default:
+            return ServerException();
+        }
+      case DioExceptionType.cancel:
+        return RequestCancelledException();
+      default:
+        return ServerException();
+    }
+  }
+} 

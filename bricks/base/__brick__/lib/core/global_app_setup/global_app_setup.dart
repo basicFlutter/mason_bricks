@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../data/network/api_provider.dart';
 import '../firebase/notification_controller.dart';
 import '../logger/app_logger.dart';
 import '../service_locator.dart';
@@ -37,7 +36,6 @@ class GlobalAppSetup  with AppLogger {
     // final result = await firebaseConfig.deleteFirebaseToken();
     // logger.i('Token Deleted: $result');
 
-    ApiProvider().initLogger();
     await ScreenUtil.ensureScreenSize();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
