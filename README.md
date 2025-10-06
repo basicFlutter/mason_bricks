@@ -403,7 +403,7 @@ on<ThemeChanged>((event, emit) async {
 
 ## 9. تنظیم Flavor برای اندروید
 
-برای تنظیم Flavor، این کدها رو به فایل `build.gradle` در پوشه `app` اضافه کنید:
+برای تنظیم Flavor، این کدها رو به فایل `build.gradle` در پوشه `app` اضافه کنید (برای java):
 
 ```gradle
 android {
@@ -423,6 +423,33 @@ android {
         local {
             dimension  "default"
             applicationIdSuffix ".local"
+        }
+    }
+}
+```
+
+
+برای تنظیم Flavor، این کدها رو به فایل `build.gradle` در پوشه `app` اضافه کنید (برای Kotlin):
+
+```gradle
+android {
+
+    flavorDimensions += "default"
+
+    productFlavors {
+        create("dev") {
+            dimension = "default"
+            applicationIdSuffix = ".dev"
+        }
+
+        create("prod") {
+            dimension = "default"
+            applicationIdSuffix = ""
+        }
+
+        create("local") {
+            dimension = "default"
+            applicationIdSuffix = ".local"
         }
     }
 }
