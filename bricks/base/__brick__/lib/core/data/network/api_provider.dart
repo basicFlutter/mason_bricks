@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:tourism/main_dev.dart';
 import '../../error/exceptions.dart';
-import '../../error/failures.dart';
 import '../dio_config.dart';
 import 'network_info.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -19,20 +19,26 @@ class ApiProvider implements ApiProviderInterface {
   ApiProvider._internal(this._dio, this._networkInfo);
 
   static ApiProvider? _instance;
+
+  static Future<void> init() async {
+    if (_instance != null) return;
+
+    final dio = await DioConfig.createDio();
+    final networkInfo = NetworkInfoImpl(InternetConnectionChecker.createInstance());
+
+    _instance = ApiProvider._internal(dio, networkInfo);
+  }
+
   static ApiProvider get instance {
-    _instance ??= ApiProvider._internal(
-      DioConfig.createDio(),
-      NetworkInfoImpl(InternetConnectionChecker.createInstance()),
-    );
+    if (_instance == null) {
+      throw Exception('⚠️ ApiProvider not initialized. Call ApiProvider.init() first.');
+    }
     return _instance!;
   }
 
   @override
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}) async {
     try {
-      if (!await _networkInfo.isConnected) {
-        throw NetworkFailure();
-      }
       final response = await _dio.get(path, queryParameters: queryParameters);
       return _handleResponse(response);
     } on DioException catch (e) {
@@ -45,14 +51,12 @@ class ApiProvider implements ApiProviderInterface {
   @override
   Future<dynamic> post(String path, {dynamic data}) async {
     try {
-      if (!await _networkInfo.isConnected) {
-        throw NetworkFailure();
-      }
       final response = await _dio.post(path, data: data);
       return _handleResponse(response);
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e) {
+      logger.e(e);
       throw ServerException();
     }
   }
@@ -60,9 +64,6 @@ class ApiProvider implements ApiProviderInterface {
   @override
   Future<dynamic> put(String path, {dynamic data}) async {
     try {
-      if (!await _networkInfo.isConnected) {
-        throw NetworkFailure();
-      }
       final response = await _dio.put(path, data: data);
       return _handleResponse(response);
     } on DioException catch (e) {
@@ -75,9 +76,6 @@ class ApiProvider implements ApiProviderInterface {
   @override
   Future<dynamic> delete(String path) async {
     try {
-      if (!await _networkInfo.isConnected) {
-        throw NetworkFailure();
-      }
       final response = await _dio.delete(path);
       return _handleResponse(response);
     } on DioException catch (e) {
@@ -90,9 +88,6 @@ class ApiProvider implements ApiProviderInterface {
   @override
   Future<dynamic> patch(String path, {dynamic data}) async {
     try {
-      if (!await _networkInfo.isConnected) {
-        throw NetworkFailure();
-      }
       final response = await _dio.patch(path, data: data);
       return _handleResponse(response);
     } on DioException catch (e) {
@@ -137,4 +132,4 @@ class ApiProvider implements ApiProviderInterface {
         return ServerException();
     }
   }
-} 
+}

@@ -1,9 +1,17 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import '../global_app_setup/app_config.dart';
-import 'interceptors/auth_interceptor.dart';
+
+import 'interceptors/cookie_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+
+
 
 class DioConfig {
   static Dio createDio({
@@ -25,7 +33,19 @@ class DioConfig {
       ),
     );
 
+
+    final dir = await getApplicationDocumentsDirectory();
+    final cookieDir = join(dir.path, '.cookies');
+    await Directory(cookieDir).create(recursive: true);
+
+    final cookieJar = PersistCookieJar(
+      storage: FileStorage(cookieDir),
+      ignoreExpires: true,
+    );
+
+
     dio.interceptors.addAll([
+      // CookieInterceptor(cookieJar),
       AuthInterceptor(),
       LoggingInterceptor(),
       PrettyDioLogger(

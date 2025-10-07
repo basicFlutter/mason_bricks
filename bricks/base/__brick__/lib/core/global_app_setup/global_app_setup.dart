@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../firebase/notification_controller.dart';
 import '../logger/app_logger.dart';
 import '../service_locator.dart';
-
+import '../data/network/api_provider.dart';
 class GlobalAppSetup  with AppLogger {
   GlobalAppSetup ({
     required Widget child
@@ -41,6 +41,8 @@ class GlobalAppSetup  with AppLogger {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    await ApiProvider.init(); // ✅ فقط یک بار مقداردهی
 
     runApp(child);
 
