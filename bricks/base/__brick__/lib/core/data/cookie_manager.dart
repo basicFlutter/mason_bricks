@@ -1,11 +1,7 @@
 import 'dart:io';
-
-import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import 'package:tourism/core/global_app_setup/app_config.dart';
 import '../global_app_setup/app_config.dart';
 class CookieManager{
   static Future<bool> isUserLoggedIn() async {
