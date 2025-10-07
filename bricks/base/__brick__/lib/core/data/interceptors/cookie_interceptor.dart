@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-
+import 'package:cookie_jar/cookie_jar.dart';
 import '../../../main_dev.dart';
 import '../../global_app_setup/app_config.dart';
+
 class CookieInterceptor extends Interceptor {
   final PersistCookieJar cookieJar;
   bool _isRefreshing = false;
@@ -15,12 +13,17 @@ class CookieInterceptor extends Interceptor {
   CookieInterceptor(this.cookieJar);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) async {
     logger.i(DateTime.now());
     final cookies = await cookieJar.loadForRequest(options.uri);
     if (cookies.isNotEmpty) {
-      options.headers[HttpHeaders.cookieHeader] =
-          cookies.map((c) => '${c.name}=${c.value}').join('; ');
+      logger.f(cookies);
+      options.headers[HttpHeaders.cookieHeader] = cookies
+          .map((c) => '${c.name}=${c.value}')
+          .join('; ');
     }
     logger.w(DateTime.now());
     handler.next(options);
@@ -29,11 +32,29 @@ class CookieInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     final setCookies = response.headers[HttpHeaders.setCookieHeader];
-    if (setCookies != null) {
+    logger.w("📥 Response received from: ${response.requestOptions.uri}");
+
+    if (setCookies != null && setCookies.isNotEmpty) {
+      logger.w("🍪 Set-Cookie headers found: ${setCookies.length}");
       final uri = response.requestOptions.uri;
-      final cookies = setCookies.map((e) => Cookie.fromSetCookieValue(e)).toList();
+      logger.f("🔗 Saving cookies for URI: $uri");
+
+      final cookies = setCookies
+          .map((e) => Cookie.fromSetCookieValue(e))
+          .toList();
+
+      for (var cookie in cookies) {
+        logger.i(
+          "💾 Saving cookie: ${cookie.name} = ${cookie.value} (domain: ${cookie.domain}, path: ${cookie.path})",
+        );
+      }
+
       await cookieJar.saveFromResponse(uri, cookies);
+      logger.i("✅ Cookies saved successfully!");
+    } else {
+      logger.w("⚠️ No Set-Cookie headers found in response");
     }
+
     handler.next(response);
   }
 
@@ -76,16 +97,21 @@ class CookieInterceptor extends Interceptor {
 
   Future<bool> _refreshToken() async {
     final dio = Dio(BaseOptions(baseUrl: AppConfig.baseUrl));
-    final cookies = await cookieJar.loadForRequest(Uri.parse(AppConfig.baseUrl));
-    dio.options.headers[HttpHeaders.cookieHeader] =
-        cookies.map((c) => '${c.name}=${c.value}').join('; ');
+    final cookies = await cookieJar.loadForRequest(
+      Uri.parse(AppConfig.baseUrl),
+    );
+    dio.options.headers[HttpHeaders.cookieHeader] = cookies
+        .map((c) => '${c.name}=${c.value}')
+        .join('; ');
 
     try {
       final res = await dio.post('/api/v1/auth/refresh-token');
       final setCookies = res.headers[HttpHeaders.setCookieHeader];
       if (setCookies != null) {
         final uri = Uri.parse(AppConfig.baseUrl);
-        final newCookies = setCookies.map((e) => Cookie.fromSetCookieValue(e)).toList();
+        final newCookies = setCookies
+            .map((e) => Cookie.fromSetCookieValue(e))
+            .toList();
         await cookieJar.saveFromResponse(uri, newCookies);
         logger.i('✅ Token refreshed successfully.');
         return true;
@@ -100,8 +126,9 @@ class CookieInterceptor extends Interceptor {
     final dio = Dio();
     final cookies = await cookieJar.loadForRequest(requestOptions.uri);
     if (cookies.isNotEmpty) {
-      requestOptions.headers[HttpHeaders.cookieHeader] =
-          cookies.map((c) => '${c.name}=${c.value}').join('; ');
+      requestOptions.headers[HttpHeaders.cookieHeader] = cookies
+          .map((c) => '${c.name}=${c.value}')
+          .join('; ');
     }
     return dio.fetch(requestOptions);
   }

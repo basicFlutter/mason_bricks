@@ -41,9 +41,13 @@ class GlobalAppSetup  with AppLogger {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    // اطمینان از مقداردهی cookieJar قبل از ApiProvider
+    logger.i("🍪 Initializing CookieJar...");
+    await DioConfig.initCookieJar();
 
+    logger.i("🌐 Initializing ApiProvider...");
     await ApiProvider.init(); // ✅ فقط یک بار مقداردهی
-
+    logger.i("✅ App initialization completed successfully!");
     runApp(child);
 
   }
