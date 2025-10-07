@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                       navigatorKey: AppNavigator().navigatorKey,
                       scaffoldMessengerKey: AppNavigator().scaffoldMessengerKey,
                       onGenerateRoute: AppNavigator().onGenerateRoute,
-                      initialRoute: AppNavigator().initialRoute,
+                      // initialRoute: AppNavigator().initialRoute,
                     );
                   },
                 ),
