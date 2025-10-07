@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:tourism/main_dev.dart';
+import '../../../main_dev.dart';
 import '../../error/exceptions.dart';
 import '../dio_config.dart';
 import 'network_info.dart';

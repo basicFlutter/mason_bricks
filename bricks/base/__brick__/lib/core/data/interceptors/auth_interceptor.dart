@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:foveo/core/data/token_manager.dart';
-
+import '../token_manager.dart';
 
 class AuthInterceptor extends Interceptor {
 
