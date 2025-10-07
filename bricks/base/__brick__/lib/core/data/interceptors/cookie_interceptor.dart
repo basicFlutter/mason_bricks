@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import '../../../main_dev.dart';
-import '../../global_app_setup/app_config.dart';
-
-
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import '../global_app_setup/app_config.dart';
 class CookieInterceptor extends Interceptor {
   final PersistCookieJar cookieJar;
   bool _isRefreshing = false;

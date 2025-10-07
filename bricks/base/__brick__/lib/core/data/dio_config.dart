@@ -10,16 +10,13 @@ import 'interceptors/cookie_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-
-
-
 class DioConfig {
-  static Dio createDio({
+  static Future<Dio> createDio({
     String? baseUrl,
     Duration? connectTimeout,
     Duration? receiveTimeout,
     Duration? sendTimeout,
-  }) {
+  }) async {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl ?? AppConfig.baseUrl,
@@ -45,8 +42,8 @@ class DioConfig {
 
 
     dio.interceptors.addAll([
-      // CookieInterceptor(cookieJar),
-      AuthInterceptor(),
+      CookieInterceptor(cookieJar),
+      // AuthInterceptor(),
       LoggingInterceptor(),
       PrettyDioLogger(
         requestHeader: true,
