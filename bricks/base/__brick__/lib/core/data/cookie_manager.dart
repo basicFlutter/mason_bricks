@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import '../global_app_setup/app_config.dart';
 import '../../main_dev.dart';
+import 'dio_config.dart';
 class CookieManager {
   static Future<bool> isUserLoggedIn() async {
     try {

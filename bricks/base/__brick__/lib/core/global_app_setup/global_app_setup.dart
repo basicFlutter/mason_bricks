@@ -8,6 +8,7 @@ import '../firebase/notification_controller.dart';
 import '../logger/app_logger.dart';
 import '../service_locator.dart';
 import '../data/network/api_provider.dart';
+import '../data/dio_config.dart';
 class GlobalAppSetup  with AppLogger {
   GlobalAppSetup ({
     required Widget child
