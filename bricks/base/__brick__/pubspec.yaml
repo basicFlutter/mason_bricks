@@ -18,7 +18,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
   dio: ^5.8.0+1
@@ -26,20 +26,20 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   pretty_dio_logger: ^1.4.0
-  firebase_messaging: ^15.2.5
-  firebase_core: ^3.13.0
+  firebase_messaging: ^16.1.1
+  firebase_core: ^4.4.0
   awesome_notifications: ^0.10.1
   logger: ^2.5.0
   flutter_screenutil: ^5.9.3
   dartz: ^0.10.1
   page_transition: ^2.2.1
   equatable: ^2.0.7
-  get_it: ^8.0.3
+  get_it: ^9.2.0
   gap: ^3.0.1
   persian_datetime_picker: ^3.1.0
   shamsi_date: ^1.1.0
-  package_info_plus: ^8.3.0
-  flutter_secure_storage: ^9.2.4
+  package_info_plus: ^9.0.0
+  flutter_secure_storage: ^10.0.0
   internet_connection_checker: ^3.0.1
 
 dependency_overrides:
