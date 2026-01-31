@@ -17,12 +17,12 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
                     return CircularProgressIndicator();
                   }
 
-                 if(state.getUsersStatus is {{useCase.pascalCase()}}Completed){
+                 if(state.{{useCase.camelCase()}}Status is {{useCase.pascalCase()}}Completed){
                   {{useCase.pascalCase()}}Completed {{useCase.camelCase()}}Completed = state.{{useCase.camelCase()}}Status as {{useCase.pascalCase()}}Completed;
                    return SizedBox();
                  }
 
-                 if(state.getUsersStatus is {{useCase.pascalCase()}}Error){
+                 if(state.{{useCase.camelCase()}}Status is {{useCase.pascalCase()}}Error){
                     {{useCase.pascalCase()}}Error {{useCase.camelCase()}}Error = state.{{useCase.camelCase()}}Status as {{useCase.pascalCase()}}Error;
                    return SizedBox();
                  }
