@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../core/error/response_error.dart';
 import '../../../../core/success_response/success_response.dart';
 import '../../presentation/manager/status/{{useCase}}_status.dart';
-import '/../core/params/no_params.dart';
 import '../../domain/repositories/{{name.camelCase()}}_repository.dart';
+import '../../../../core/error/failures.dart';
 
 part '{{name}}_event.dart';
 part '{{name}}_state.dart';
@@ -21,7 +20,7 @@ class {{name.pascalCase()}}Bloc extends Bloc<{{name.pascalCase()}}Event, {{name.
 
         emit(state.copyWith(new{{useCase.pascalCase()}}Status: {{useCase.pascalCase()}}Loading()));
 
-        Either<ResponseError , SuccessResponse> result = await {{name.camelCase()}}Repository.{{useCase.camelCase()}}();
+        Either<Failure , SuccessResponse> result = await {{name.camelCase()}}Repository.{{useCase.camelCase()}}();
 
         result.fold((l){
            emit(state.copyWith(new{{useCase.pascalCase()}}Status: {{useCase.pascalCase()}}Error(responseError: l)));
