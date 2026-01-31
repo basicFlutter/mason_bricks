@@ -5,18 +5,19 @@ import '../../../../core/error/response_error.dart';
 import '../../../../core/success_response/success_response.dart';
 import '../../domain/repositories/{{name}}_repository.dart';
 import '../data_sources/{{name}}_api_provider.dart';
+import '../../../../core/error/failures.dart';
 
 class {{name.pascalCase()}}RepositoryImpl extends {{name.pascalCase()}}Repository{
     {{name.pascalCase()}}ApiProvider {{name.camelCase()}}ApiProvider;
     {{name.pascalCase()}}RepositoryImpl({required this.{{name.camelCase()}}ApiProvider});
     @override
-    Future<Either<ResponseError, SuccessResponse>> {{useCase.camelCase()}}() async{
+    Future<Either<Failure, SuccessResponse>> {{useCase.camelCase()}}() async{
        try {
        final response = await {{name.camelCase()}}ApiProvider.call{{useCase.pascalCase()}}Route();
        return Right(SuccessResponse());
        } on DioException catch (error) {
-       ResponseError responseError =  ErrorHandler.handleError(error);
-       return Left(responseError);
+         Failure failure =  ErrorHandler.handleError(error);
+        return Left(failure);
        }
     }
 
