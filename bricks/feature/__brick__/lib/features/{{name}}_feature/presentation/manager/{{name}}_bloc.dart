@@ -23,7 +23,7 @@ class {{name.pascalCase()}}Bloc extends Bloc<{{name.pascalCase()}}Event, {{name.
         Either<Failure , SuccessResponse> result = await {{name.camelCase()}}Repository.{{useCase.camelCase()}}();
 
         result.fold((l){
-           emit(state.copyWith(new{{useCase.pascalCase()}}Status: {{useCase.pascalCase()}}Error(responseError: l)));
+           emit(state.copyWith(new{{useCase.pascalCase()}}Status: {{useCase.pascalCase()}}Error(failure: l)));
         },(r){
            emit(state.copyWith(new{{useCase.pascalCase()}}Status: {{useCase.pascalCase()}}Completed()));
         });
