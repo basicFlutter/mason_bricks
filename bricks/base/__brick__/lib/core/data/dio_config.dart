@@ -1,6 +1,3 @@
-
-
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -11,6 +8,7 @@ import '../../main_dev.dart';
 import '../global_app_setup/app_config.dart';
 
 import 'interceptors/cookie_interceptor.dart';
+
 import 'interceptors/cors_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -110,4 +108,3 @@ class DioConfig {
     return dio;
   }
 }
-
